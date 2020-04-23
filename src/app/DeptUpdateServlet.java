@@ -4,10 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -19,35 +16,58 @@ import javax.servlet.http.HttpServletResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * Servlet implementation class DeptServlet
+ * Servlet implementation class DeptUpdateServlet
  */
-@WebServlet("/DeptServlet")
-public class DeptServlet extends HttpServlet {
+@WebServlet("/DeptUpdateServlet")
+public class DeptUpdateServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
 
-	@Override
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public DeptUpdateServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 		response.setContentType("text/html; charset=UTF-8");
 		//一覧表示、追加、編集、削除のどのリクエストかを判断
 		String deptId = request.getParameter("deptId");
 		String jsRequest = request.getParameter("request");
+		String newName = request.getParameter("newName");
 		//String jsRequest = "depttable";
 		String sql = "";
+		String excute_message = "";
+		System.out.println(deptId+" "+jsRequest+" "+newName);
 
-		if(jsRequest.equals("depttable")){
-			//一覧表示
-			sql = "select \n" +
-					"DEPT_ID,  \n" +
-					"DEPT_NAME \n" +
-					"from \n" +
-					"TR_DEPT \n";
-		}else if(jsRequest.equals("setdeptName")){
-			sql = "select \n" +
-					"DEPT_ID,  \n" +
-					"DEPT_NAME \n" +
+		if(jsRequest.equals("updateDept")){
+			//部署名を編集（アップデート）
+			sql = "update TR_DEPT \n" +
+					"set DEPT_NAME = '"+newName+"' \n" +
+					"where DEPT_ID = '"+deptId+"' \n";
+			excute_message = newName+"を編集しました";
+		}else if(jsRequest.equals("createDept")){
+			sql = "insert into TR_DEPT \n" +
+					"(DEPT_ID,DEPT_NAME) \n" +
+					"select \n" +
+					"CONCAT('D', LPAD(count(*)+1,2,'0')),'"+newName+"' \n" +
 					"from \n" +
 					"TR_DEPT \n" +
-					"where 1=1 \n" +
-					"and DEPT_ID = '"+deptId+"' \n";
+					"order by \n" +
+					"DEPT_ID\n";
+			excute_message = newName+"を追加しました";
 		}else{
 			System.out.println("リクエストが指定されていません");
 		}
@@ -65,35 +85,20 @@ public class DeptServlet extends HttpServlet {
 			// SQLの命令文を実行するための準備をおこないます
 			Statement stmt = con.createStatement();
 			// SQLの命令文を実行し、その結果をResultSet型のrsに代入します
-			ResultSet rs1 = stmt.executeQuery(sql);
+
 		) {
-			List<Dept> deptList = new ArrayList<Dept>();
-			// SQL実行結果を保持している変数rsから情報を取得
-			while (rs1.next()) {
-				Dept dept = new Dept();
-				dept.setDeptId(rs1.getString("DEPT_ID"));
-				dept.setDeptName(rs1.getString("DEPT_NAME"));
-				deptList.add(dept);
-			}
+
+			int rs1 = stmt.executeUpdate(sql);
 
 			// アクセスした人に応答するためのJSONを用意する
 			PrintWriter pw = response.getWriter();
 
 			// JSONで出力する
-			pw.append(new ObjectMapper().writeValueAsString(deptList));
+			pw.append(new ObjectMapper().writeValueAsString(excute_message));
 
 		} catch (Exception e) {
 			throw new RuntimeException(String.format("検索処理の実施中にエラーが発生しました。詳細：[%s]", e.getMessage()), e);
 		}
-
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
 	}
 
 }

@@ -1,0 +1,60 @@
+// AjaxでJSONを取得する
+function executeAjax () {
+	'use strict';
+	var requestQuery = {
+			"request":"depttable"
+	};
+	$.ajax({
+		type : 'GET',
+		url : '/syainSearch/DeptServlet',
+		dataType : 'json',
+		data :requestQuery,
+		success : function (json) {
+			// DOM操作
+			console.log(json)
+
+			for(var i=0;i<json.length;i++){
+				var dept = json[i];
+				var deptName = dept.deptName
+				var tableElement='<tr>'
+								+'<td>'+dept.deptId+'</td>'
+								+'<td>'+dept.deptName+'</td>'
+								+'<td><input type="button" name="edit" value="編集" id="'+dept.deptId+'" onclick="editDept(this.id);"></td>'
+								+'<td><input type="button" name="delete" value="削除" id="'+dept.deptId+'" onclick="deleteDept(this.id);"></td>'
+								+'</tr>'
+				$('#deptData').append(tableElement);
+			}
+		}
+	});
+}
+
+function editDept(id_value){
+	//押したボタンの部署IDを代入
+	var edit_deptId = id_value;
+	if(edit_deptId==='addDept'){
+		console.log('新規追加します');
+		location.href = '/syainSearch/department/deptedit.html';
+	}else{
+		console.log(edit_deptId+' の部署を編集します');
+		location.href = '/syainSearch/department/deptedit.html?deptid='+edit_deptId;
+
+	}
+
+}
+
+function deleteDept(id_value){
+	//押したボタンの部署IDを代入
+	var requestQuery = id_value;
+	console.log(requestQuery+'の部署を削除します');
+}
+
+$(document).ready(function () {
+	'use strict';
+	// 初期表示用
+	executeAjax();
+
+	// 更新ボタンにイベント設定
+	$('#searchBtn').bind('click',executeAjax);
+
+	$('#edit').bind('click',editDept);
+});
