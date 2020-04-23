@@ -1,0 +1,31 @@
+@CHARSET "UTF-8";
+
+/****** テーブル */
+table {
+	/* 枠線 */
+	border-collapse: collapse;
+	border-right: 1px solid #999;
+}
+
+table th {
+	/* 内部余白 */
+	padding: 10px;
+	/* 枠線 */
+	border-top: 1px solid #fff;
+	/* 文字色 */
+	color: #fff;
+	/* 文字表示 */
+	text-align: left;
+	vertical-align: top;
+	/* 背景色 */
+	background-color: #555;
+}
+
+table td {
+	/* 内部余白 */
+	padding: 6px;
+	/* 枠線 */
+	border: 1px solid #999;
+	/* 背景色 */
+	background-color: #fff;
+}
