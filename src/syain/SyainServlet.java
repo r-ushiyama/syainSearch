@@ -48,9 +48,18 @@ public class SyainServlet extends HttpServlet {
 
 				if(jsRequest.equals("syaintable")){
 					//一覧表示
-					sql = "select NO, NAME from TR_SYAIN order by NO";
-				}else if(jsRequest.equals("setsyainName")){
-					sql = "";
+					sql = "select \n" +
+							"* \n" +
+							"from \n" +
+							"TR_SYAIN,TR_DEPT \n" +
+							"where TR_SYAIN.DEPT_ID = TR_DEPT.DEPT_ID \n"+
+							"order by ID \n";
+				}else if(jsRequest.equals("setsyainInfo")){
+					sql = "select TR_DEPT.DEPT_NAME,TR_SYAIN.DEPT_ID,ID,NAME,AGE,SEX,PHOTO_ID,JOIN_DATE,LEAVE_DATE,ZIP,PREFECTURE,ADDRESS \n" +
+							"from TR_SYAIN,TR_DEPT \n" +
+							"where 1=1 \n" +
+							"and ID='"+syainId+"' \n" +
+							"and TR_SYAIN.DEPT_ID = TR_DEPT.DEPT_ID \n";
 				}else{
 					System.out.println("リクエストが指定されていません");
 				}
@@ -72,8 +81,19 @@ public class SyainServlet extends HttpServlet {
 					// SQL実行結果を保持している変数rsから情報を取得
 					while (rs1.next()) {
 						Syain syain = new Syain();
-						syain.setSyainId(rs1.getString("NO"));
+						syain.setSyainDeptName(rs1.getString("DEPT_NAME"));
+						syain.setSyainId(rs1.getString("ID"));
 						syain.setSyainName(rs1.getString("NAME"));
+						syain.setSyainDeptId(rs1.getString("DEPT_ID"));
+						syain.setSyainAge(rs1.getInt("AGE"));
+						syain.setSyainSex(rs1.getString("SEX"));
+						syain.setSyainZip(rs1.getString("ZIP"));
+						syain.setSyainPrefecture(rs1.getString("PREFECTURE"));
+						syain.setSyainAddress(rs1.getString("ADDRESS"));
+						syain.setSyainPhotoId(rs1.getString("PHOTO_ID"));
+						syain.setSyainJoinDate(rs1.getString("JOIN_DATE"));
+						syain.setSyainLeaveDate(rs1.getString("LEAVE_DATE"));
+
 						syainList.add(syain);
 					}
 

@@ -34,12 +34,13 @@ function executeAjax () {
 function editSyain(id_value){
 	//押したボタンの部署IDを代入
 	var edit_syainId = id_value;
+
 	if(edit_syainId==='addSyain'){
 		console.log('新規追加します');
-		location.href = '/syainSearch/department/syainedit.html';
+		location.href = '/syainSearch/syain/syainedit.html';
 	}else{
-		console.log(edit_syainId+' の部署を編集します');
-		location.href = '/syainSearch/department/syainedit.html?syainid='+edit_syainId;
+		console.log(edit_syainId+' の社員を編集します');
+		location.href = '/syainSearch/syain/syainedit.html?syainid='+edit_syainId;
 
 	}
 
@@ -62,7 +63,7 @@ function deleteSyain(id_value){
 		success : function (json) {
 			// DOM操作
 			console.log(json)
-			location.href = '/syainSearch/department/syaintable.html';
+			location.href = '/syainSearch/syain/syaintable.html';
 		},
 		error: function (json) {
 	       alert('エラーが発生したため削除することができませんでした。');

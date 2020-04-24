@@ -14,10 +14,21 @@ public class Syain implements Serializable {
 	private String syainSex;
 	//写真ID
 	private String syainPhotoId;
-	//住所
-	private String syainAddress;
 	//部署ID
 	private String syainDeptId;
+	//入社日
+	private String syainJoinDate;
+	//退社日
+	private String syainLeaveDate;
+	//郵便番号
+	private String syainZip;
+	//都道府県
+	private String syainPrefecture;
+	//住所
+	private String syainAddress;
+	//住所
+	private String syainDeptName;
+
 
 	public String getSyainId() {
 		return syainId;
@@ -49,18 +60,51 @@ public class Syain implements Serializable {
 	public void setSyainPhotoId(String syainPhotoId) {
 		this.syainPhotoId = syainPhotoId;
 	}
-	public String getSyainAddress() {
-		return syainAddress;
-	}
-	public void setSyainAddress(String syainAddress) {
-		this.syainAddress = syainAddress;
-	}
 	public String getSyainDeptId() {
 		return syainDeptId;
 	}
 	public void setSyainDeptId(String syainDeptId) {
 		this.syainDeptId = syainDeptId;
 	}
+	public String getSyainJoinDate() {
+		return syainJoinDate;
+	}
+	public void setSyainJoinDate(String syainJoinDate) {
+		this.syainJoinDate = syainJoinDate;
+	}
+	public String getSyainLeaveDate() {
+		return syainLeaveDate;
+	}
+	public void setSyainLeaveDate(String syainLeaveDate) {
+		this.syainLeaveDate = syainLeaveDate;
+	}
+	public String getSyainZip() {
+		return syainZip;
+	}
+	public void setSyainZip(String syainZip) {
+		this.syainZip = syainZip;
+	}
+	public String getSyainPrefecture() {
+		return syainPrefecture;
+	}
+	public void setSyainPrefecture(String syainPrefecture) {
+		this.syainPrefecture = syainPrefecture;
+	}
+	public String getSyainAddress() {
+		return syainAddress;
+	}
+	public void setSyainAddress(String syainAddress) {
+		this.syainAddress = syainAddress;
+	}
+	public String getSyainDeptName() {
+		return syainDeptName;
+	}
+	public void setSyainDeptName(String syainDeptName) {
+		// TODO 自動生成されたメソッド・スタブ
+		this.syainDeptName=syainDeptName;
+	}
+
+
 
 
 }
