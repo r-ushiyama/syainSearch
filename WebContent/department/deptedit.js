@@ -24,10 +24,10 @@ function setdeptName () {
 	// ---------------ここまで---------------
 }
 
-//部署の更新
-function updateDept(deptId,inputValue){
+//部署の更新と追加
+function changeDept(deptId,inputValue,request){
 	var requestQuery = {
-			"request" : "updateDept",
+			"request" : request,
 			"deptId" : deptId,
 			"newName" : inputValue
 	};
@@ -41,16 +41,11 @@ function updateDept(deptId,inputValue){
 		dataType : 'json',
 		data :requestQuery,
 		success : function (json) {
-			alert(json);
-			location.href = '/syainSearch/department/depttable.html';
+			//alert(json);
+			location.href = '/syainSearch/department/done.html';
 		}
 
 	});
-}
-
-//部署の作成
-function createDept(){
-
 }
 
 //パラメータが入力されているか確認
@@ -77,10 +72,12 @@ function confirm(){
 	}else{
 
 		if(!deptId){
-			//createDept(inputValue);
+			var request = "createDept"
+			changeDept(deptId,inputValue,request);
 			console.log("部署を新規作成します")
 		}else{
-			updateDept(deptId,inputValue);
+			var request = "updateDept"
+			changeDept(deptId,inputValue,request);
 			console.log("部署名を編集します")
 		}
 	}

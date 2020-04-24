@@ -1,4 +1,4 @@
-package app;
+package department;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import connectDB.ConnectDb;
 
 /**
  * Servlet implementation class DeptServlet
@@ -39,7 +41,8 @@ public class DeptServlet extends HttpServlet {
 					"DEPT_ID,  \n" +
 					"DEPT_NAME \n" +
 					"from \n" +
-					"TR_DEPT \n";
+					"TR_DEPT \n"+
+					"order by DEPT_ID";
 		}else if(jsRequest.equals("setdeptName")){
 			sql = "select \n" +
 					"DEPT_ID,  \n" +

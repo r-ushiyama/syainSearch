@@ -1,4 +1,4 @@
-package app;
+package department;
 
 import java.io.Serializable;
 

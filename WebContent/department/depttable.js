@@ -1,3 +1,4 @@
+
 // AjaxでJSONを取得する
 function executeAjax () {
 	'use strict';
@@ -44,8 +45,24 @@ function editDept(id_value){
 
 function deleteDept(id_value){
 	//押したボタンの部署IDを代入
-	var requestQuery = id_value;
+	var requestQuery = {
+			"deptId" : id_value,
+			"request" : "deleteDept"
+	};
 	console.log(requestQuery+'の部署を削除します');
+	'use strict';
+	$.ajax({
+		type : 'POST',
+		url : '/syainSearch/DeptUpdateServlet',
+		dataType : 'json',
+		data :requestQuery,
+		success : function (json) {
+			// DOM操作
+			console.log(json)
+			location.href = '/syainSearch/department/depttable.html';
+
+		}
+	});
 }
 
 $(document).ready(function () {

@@ -1,4 +1,4 @@
-package app;
+package department;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import connectDB.ConnectDb;
 
 /**
  * Servlet implementation class DeptUpdateServlet
@@ -57,7 +59,7 @@ public class DeptUpdateServlet extends HttpServlet {
 			sql = "update TR_DEPT \n" +
 					"set DEPT_NAME = '"+newName+"' \n" +
 					"where DEPT_ID = '"+deptId+"' \n";
-			excute_message = newName+"を編集しました";
+			excute_message = "部署名を"+newName+"に変更しました";
 		}else if(jsRequest.equals("createDept")){
 			sql = "insert into TR_DEPT \n" +
 					"(DEPT_ID,DEPT_NAME) \n" +
@@ -68,6 +70,10 @@ public class DeptUpdateServlet extends HttpServlet {
 					"order by \n" +
 					"DEPT_ID\n";
 			excute_message = newName+"を追加しました";
+		}else if(jsRequest.equals("deleteDept")){
+			sql = "delete from TR_DEPT \n" +
+					"where DEPT_ID = '"+deptId+"' \n";
+			excute_message = newName+"を削除しました";
 		}else{
 			System.out.println("リクエストが指定されていません");
 		}

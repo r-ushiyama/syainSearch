@@ -1,10 +1,10 @@
-package app;
+package connectDB;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class ConnectDb {
-	static Map<String, String> loadDB(){
+	public static Map<String, String> loadDB(){
 		try {
 			// JDBCドライバのロード
 			Class.forName("oracle.jdbc.driver.OracleDriver");
