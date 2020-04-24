@@ -40,9 +40,12 @@ function changeDept(deptId,inputValue,request){
 		url : '/syainSearch/DeptUpdateServlet',
 		dataType : 'json',
 		data :requestQuery,
-		success : function (json) {
+		success : function (json) {//正常にアップデートできた際
 			//alert(json);
-			location.href = '/syainSearch/department/done.html';
+			location.href = '/syainSearch/department/done.html?error=0';
+		},
+		error: function (json) { //エラーが発生した際
+			location.href = '/syainSearch/department/done.html?error=1';
 		}
 
 	});
@@ -74,11 +77,11 @@ function confirm(){
 		if(!deptId){
 			var request = "createDept"
 			changeDept(deptId,inputValue,request);
-			console.log("部署を新規作成します")
+			//console.log("部署を新規作成します")
 		}else{
 			var request = "updateDept"
 			changeDept(deptId,inputValue,request);
-			console.log("部署名を編集します")
+			//console.log("部署名を編集します")
 		}
 	}
 

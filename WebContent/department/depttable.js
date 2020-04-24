@@ -1,5 +1,5 @@
 
-// AjaxでJSONを取得する
+// 部署一覧表示
 function executeAjax () {
 	'use strict';
 	var requestQuery = {
@@ -29,6 +29,7 @@ function executeAjax () {
 	});
 }
 
+//編集ボタンをクリック、編集ページへ飛ぶ
 function editDept(id_value){
 	//押したボタンの部署IDを代入
 	var edit_deptId = id_value;
@@ -43,6 +44,7 @@ function editDept(id_value){
 
 }
 
+//削除ボタンをクリック、即削除
 function deleteDept(id_value){
 	//押したボタンの部署IDを代入
 	var requestQuery = {
@@ -60,11 +62,14 @@ function deleteDept(id_value){
 			// DOM操作
 			console.log(json)
 			location.href = '/syainSearch/department/depttable.html';
-
-		}
+		},
+		error: function (json) {
+	       alert('エラーが発生したため削除することができませんでした。');
+	    }
 	});
 }
 
+//ページ読み込み時
 $(document).ready(function () {
 	'use strict';
 	// 初期表示用
@@ -72,6 +77,4 @@ $(document).ready(function () {
 
 	// 更新ボタンにイベント設定
 	$('#searchBtn').bind('click',executeAjax);
-
-	$('#edit').bind('click',editDept);
 });
