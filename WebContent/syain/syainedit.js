@@ -1,5 +1,5 @@
 //都道府県名セレクト
-function Pref(syainPrefecture,Element){
+function Pref(syainPref,Element){
 	var prefName = [
 		'北海道',		'青森県',		'岩手県',		'宮城県',		'秋田県',		'山形県',		'福島県',
 		'茨城県',		'栃木県',		'群馬県',		'埼玉県',		'千葉県',		'東京都',		'神奈川県',
@@ -9,11 +9,11 @@ function Pref(syainPrefecture,Element){
 		'徳島県',		'香川県',		'愛媛県',		'高知県',		'福岡県',		'佐賀県',		'長崎県',
 		'熊本県',		'大分県',		'宮崎県',		'鹿児島県',		'沖縄県'
 	];
-	Element += '<select name="pref">'
+	Element += '<select name="pref" id="pref">'
 		+ '<option value="">都道府県選択</option>'
 	for(var i=0;i<prefName.length;i++){
 		var select = "";
-		if(prefName[i]==syainPrefecture){
+		if(prefName[i]==syainPref){
 			var select = "selected";
 		}
 		Element += '<option value="'+prefName[i]+'" '+select+'>'+prefName[i]+'</option>';
@@ -52,8 +52,9 @@ function setsyainInfo (deptName) {
 			var syainDeptName = syain.syainDeptName
 			var syainJoinDate = syain.syainJoinDate
 			var syainLeaveDate = syain.LeaveDate
+			if(!syainLeaveDate) syainLeaveDate = '';
 			var syainZip = syain.syainZip
-			var syainPrefecture = syain.syainPrefecture
+			var syainPref = syain.syainPrefecture
 			var syainAddress = syain.syainAddress
 			if(syainSex=="男"){
 				var Check_male = 'checked'
@@ -65,14 +66,14 @@ function setsyainInfo (deptName) {
 			+'名前:<input value="'+syainName+'" id="syainName"></br>'
 			+'年齢:<input value="'+syainAge+'" id="syainAge"></br>'
 			+'<div id="check">性別:'
-			+'<input type="radio" name="gender" value="'+syainAge+'" id="syainAge" '+Check_male+'>男性'
-			+'<input type="radio" name="gender" value="'+syainAge+'" id="syainAge" '+Check_female+'>女性'
+			+'<input type="radio" name="gender" value="'+syainSex+'" id="syainAge" '+Check_male+'>男性'
+			+'<input type="radio" name="gender" value="'+syainSex+'" id="syainAge" '+Check_female+'>女性'
 			+'</div>'
 			+'郵便番号:<input value="'+syainZip+'" id="syainZip"></br>'
 			+'都道府県:'
-			Element = Pref(syainPrefecture,Element); //都道府県プルダウンメニュー
+			Element = Pref(syainPref,Element); //都道府県プルダウンメニュー
 			Element += '住所:<input value="'+syainAddress+'" id="syainAddress"></br>'
-			+'所属:<select name="Dept">'
+			+'所属:<select name="Dept" id="Dept">'
 			for(var i=0;i<deptName.length;i++){
 				var getdeptName = deptName[i];
 				//初期値設定
@@ -86,8 +87,6 @@ function setsyainInfo (deptName) {
 			+'入社日:<input value="'+syainJoinDate+'" id="syainJoinDate"></br>'
 			+'退社日:<input value="'+syainLeaveDate+'" id="syainLeaveDate"></br>'
 			$('#syainInfo').append(Element);
-
-
 		}
 
 	});
@@ -155,7 +154,8 @@ function getparam(){
 	syainId = parameter.split('=')[1];
 	console.log(syainId);
 	if(!syainId){
-		$('#comment').html('<font size="16">部署データを新規作成</font>')
+		$('#comment').html('<font size="16">社員データを新規作成</font>')
+		var Element = ''
 	}else{
 		getDepttable ();
 	}
@@ -164,8 +164,49 @@ function getparam(){
 
 //設定ボタンを押した際に実行
 function confirm(){
-	var inputValue = $('#inputName').val();
+	var requestQuery = {
+		"request" : "updateSyainInfo",
+		"syainId" : $('#syainId').val(),
+		"syainName" : $('#syainName').val(),
+		"syainAge" : $('#syainAge').val(),
+		"syainSex" : $('input[name="gender"]:checked').val(),
+		"syainPhotoId" : "",
+		"syainZip" : $('#syainZip').val(),
+		"syainPref" : $("#pref option:selected").text(),
+		"syainAddress" : $('#syainAddress').val(),
+		"syainDeptName" : $("#Dept option:selected").text(),
+		"syainJoinDate" : $('#syainJoinDate').val(),
+		"syainLeaveDate" : $('#syainLeaveDate').val()
+	}
+	if(!$('#syainId').val()||!$('#syainName').val()||!$('#syainAge').val()||
+			!$('input[name="gender"]:checked').val()||!$('#syainZip').val()||
+			!$("#pref option:selected").text()||!$('#syainAddress').val()||
+			!$("#Dept option:selected").text()||!$('#syainJoinDate').val()){
+		alert("正常に入力されていません")
+	}else{
+		'use strict';
 
+		console.dir(requestQuery);
+
+		$.ajax({
+			type : 'POST',
+			url : '/syainSearch/SyainUpdateServlet',
+			dataType : 'json',
+			data :requestQuery,
+			success : function (json) {//正常にアップデートできた際
+				//alert(json);
+				location.href = '/syainSearch/syain/done.html?error=0';
+			},
+			error: function (json) { //エラーが発生した際
+				location.href = '/syainSearch/syain/done.html?error=1';
+			}
+
+		});
+	}
+
+
+
+	/*
 	if(!inputValue){
 		alert("何も入力されていません");
 	}else{
@@ -180,6 +221,7 @@ function confirm(){
 			//console.log("部署名を編集します")
 		}
 	}
+	*/
 
 }
 
@@ -192,9 +234,9 @@ $(document).ready(function () {
 
 	//パラメータが入力されているか確認
 	getparam();
-	/*
-	// 更新ボタンにイベント設定
+
+	// 設定ボタン
 	$('#confirm').bind('click',confirm);
-	*/
+
 
 });

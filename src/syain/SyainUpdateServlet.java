@@ -46,21 +46,32 @@ public class SyainUpdateServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html; charset=UTF-8");
 		//一覧表示、追加、編集、削除のどのリクエストかを判断
-		String deptId = request.getParameter("deptId");
 		String jsRequest = request.getParameter("request");
-		String newName = request.getParameter("newName");
+		String syainId = request.getParameter("syainId");
+		String syainName = request.getParameter("syainName");
+		String syainAge = request.getParameter("syainAge");
+		String syainSex = request.getParameter("syainSex");
+		String syainPhotoId = request.getParameter("syainPhotoId");
+		String syainZip = request.getParameter("syainZip");
+		String syainPref = request.getParameter("syainPref");
+		String syainAddress = request.getParameter("syainAddress");
+		String syainDeptName = request.getParameter("syainDeptName");
+		String syainJoinDate = request.getParameter("syainJoinDate");
+		String syainLeaveDate = request.getParameter("syainLeaveDate");
+		System.out.println(syainId + syainName + syainAge + syainSex + syainZip + syainPref + syainAddress + syainDeptName + syainJoinDate + "退社日:"+syainLeaveDate);
+
 		//String jsRequest = "depttable";
 		String sql = "";
 		String excute_message = "";
-		System.out.println(deptId+" "+jsRequest+" "+newName);
 
-		if(jsRequest.equals("updateDept")){
+
+		if(jsRequest.equals("updateSyainInfo")){
 			//部署名を編集（アップデート）
 			sql = "update TR_DEPT \n" +
 					"set DEPT_NAME = '"+newName+"' \n" +
 					"where DEPT_ID = '"+deptId+"' \n";
 			excute_message = "部署名を"+newName+"に変更しました";
-		}else if(jsRequest.equals("createDept")){
+		}/*else if(jsRequest.equals("createDept")){
 			sql = "insert into TR_DEPT \n" +
 					"(DEPT_ID,DEPT_NAME) \n" +
 					"select \n" +
@@ -77,7 +88,7 @@ public class SyainUpdateServlet extends HttpServlet {
 		}else{
 			System.out.println("リクエストが指定されていません");
 		}
-
+		 */
 
 
 
