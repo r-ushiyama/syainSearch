@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,13 +42,11 @@ public class SyainServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 				response.setContentType("text/html; charset=UTF-8");
-				//一覧表示、追加、編集、削除のどのリクエストかを判断
-				String syainId = request.getParameter("syainId");
-				String jsRequest = request.getParameter("request");
-				String syainName = request.getParameter("syainName");
-				String syainDeptName = request.getParameter("syainDeptName");
 
-				List<Syain> syainList = selectSyainFromDB(syainId, syainName, syainDeptName, jsRequest);
+				Map<String, String> ParamFromHttp = getParameterFromHttp(request);
+
+				List<Syain> syainList = selectSyainFromDB(ParamFromHttp.get("syainId"), ParamFromHttp.get("syainName"),
+						ParamFromHttp.get("syainDeptName"), ParamFromHttp.get("jsRequest"));
 
 				// アクセスした人に応答するためのJSONを用意する
 				PrintWriter pw = response.getWriter();
@@ -57,17 +56,27 @@ public class SyainServlet extends HttpServlet {
 
 	}
 
+	private Map<String, String> getParameterFromHttp(HttpServletRequest request){
+		Map<String, String> ParamFromHttp = new HashMap<String, String>();
+		ParamFromHttp.put("syainId" , request.getParameter("syainId"));
+		ParamFromHttp.put("syainName" , request.getParameter("syainName"));
+		ParamFromHttp.put("syainDeptName" , request.getParameter("syainDeptName"));
+		ParamFromHttp.put("jsRequest" , request.getParameter("request"));
+		return ParamFromHttp;
+	}
 
 	private List<Syain> selectSyainFromDB(String syainId, String syainName, String syainDeptName, String jsRequest) {
-		// TODO 自動生成されたメソッド・スタブ
-
-
-		//String jsRequest = "syaintable";
+		//実行するSQL文を決定
 		String sql  = defineSqlByRequest(syainId, syainName, syainDeptName, jsRequest);
 
 		//DBのURL,ID,PASSを取得
 		Map<String, String> conInfo = ConnectDb.loadDB();
 
+		//SQL実行
+		return excuteSql(sql, conInfo);
+	}
+
+	private List<Syain> excuteSql(String sql, Map<String, String> conInfo) {
 		try (
 			// データベースへ接続します
 			Connection con = DriverManager.getConnection(conInfo.get("url"), conInfo.get("user"), conInfo.get("pass"));
