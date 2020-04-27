@@ -71,6 +71,7 @@ public class SyainServlet extends HttpServlet {
 							"and TR_SYAIN.ID LIKE '%"+syainId+"%' \n" +
 							"and TR_SYAIN.NAME LIKE '%"+syainName+"%' \n" +
 							"and TR_SYAIN.DEPT_ID = TR_DEPT.DEPT_ID \n";
+
 				}else{
 					System.out.println("リクエストが指定されていません");
 				}

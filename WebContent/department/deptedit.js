@@ -13,7 +13,8 @@ function setdeptName () {
 		success : function (json) {
 			var dept = json[0];
 			var deptName = dept.deptName;
-			$('#comment').html('<font size="6">'+deptName+'の名前を変更</font>')
+			$('#comment').html('<font size="6">'+deptName+'の名前を変更</font>');
+			document.getElementById('inputName').value = deptName;
 		}
 
 	});
@@ -59,6 +60,7 @@ function getparam(){
 
 //設定ボタンを押した際に実行
 function confirm(){
+
 	var inputValue = $('#inputName').val();
 
 	if(!inputValue){
