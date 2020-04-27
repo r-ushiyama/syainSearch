@@ -55,7 +55,7 @@ public class SyainServlet extends HttpServlet {
 				// JSONで出力する
 				pw.append(new ObjectMapper().writeValueAsString(syainList));
 
-			}
+	}
 
 
 	private List<Syain> selectSyainFromDB(String syainId, String syainName, String syainDeptName, String jsRequest) {
@@ -65,10 +65,8 @@ public class SyainServlet extends HttpServlet {
 		//String jsRequest = "syaintable";
 		String sql  = defineSqlByRequest(syainId, syainName, syainDeptName, jsRequest);
 
-
 		//DBのURL,ID,PASSを取得
 		Map<String, String> conInfo = ConnectDb.loadDB();
-
 
 		try (
 			// データベースへ接続します
@@ -80,13 +78,10 @@ public class SyainServlet extends HttpServlet {
 		) {
 			List<Syain> syainList = retrieveSyainList(rs1);
 			return syainList;
-
-
-
 		} catch (Exception e) {
 			throw new RuntimeException(String.format("検索処理の実施中にエラーが発生しました。詳細：[%s]", e.getMessage()), e);
 		}finally{
-			return new ArrayList<Syain>();
+
 		}
 	}
 
@@ -95,7 +90,6 @@ public class SyainServlet extends HttpServlet {
 		// SQL実行結果を保持している変数rsから情報を取得
 		while (rs1.next()) {
 			Syain syain = retrieveSyain(rs1);
-
 			syainList.add(syain);
 		}
 		return syainList;
@@ -131,6 +125,7 @@ public class SyainServlet extends HttpServlet {
 		}else{
 			System.out.println("リクエストが指定されていません");
 		}
+		//System.out.println(sql);
 		return sql;
 	}
 
