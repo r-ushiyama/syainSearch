@@ -52,7 +52,6 @@ public class DeptUpdateServlet extends HttpServlet {
 		//String jsRequest = "depttable";
 		String sql = "";
 		String excute_message = "";
-		System.out.println(deptId+" "+jsRequest+" "+newName);
 
 		if(jsRequest.equals("updateDept")){
 			//部署名を編集（アップデート）

@@ -16,8 +16,6 @@ function Pref(syainPref,Element){
 		var select = "";
 		if(prefName[i]==syainPref){
 			select = "selected";
-		}else if(prefName[i]==="東京都"){
-			select = "selected"
 		}
 		Element += '<option value="'+prefName[i]+'" '+select+'>'+prefName[i]+'</option>';
 	}

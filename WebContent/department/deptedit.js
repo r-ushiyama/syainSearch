@@ -13,7 +13,7 @@ function setdeptName () {
 		success : function (json) {
 			var dept = json[0];
 			var deptName = dept.deptName;
-			$('#comment').html('<font size="16">'+deptName+'の名前を変更</font>')
+			$('#comment').html('<font size="6">'+deptName+'の名前を変更</font>')
 		}
 
 	});
@@ -51,7 +51,7 @@ function getparam(){
 	deptId = parameter.split('=')[1];
 
 	if(!deptId){
-		$('#comment').html('<font size="16">部署データを新規作成</font>')
+		$('#comment').html('<font size="6">部署データを新規作成</font>')
 	}else{
 		setdeptName();
 	}

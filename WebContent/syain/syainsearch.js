@@ -61,6 +61,8 @@ function searchSyain(){
 			$('#userInput').html('');
 			if(json.length==0){
 				$('#userInput').append('登録されている社員がいません');
+				$('#searchSyain').attr({'value': '新規作成','onclick':"location.href = '/syainSearch/syain/syainedit.html'"});
+				$('#cancel').attr({'value': '再検索','onclick':'reload()'});
 			}else{
 				var Element = '<table id="syainData">'
 					//+'<tr>'
@@ -84,8 +86,6 @@ function searchSyain(){
 				//console.log(Element);
 				$('#comment').html("社員一覧：")
 			}
-
-
 		}
 	});
 }
