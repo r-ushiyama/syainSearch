@@ -1,5 +1,5 @@
 
-// 部署一覧表示
+//
 function executeAjax () {
 	'use strict';
 	var requestQuery = {
@@ -26,11 +26,9 @@ function executeAjax () {
 					Element += '<tr>'
 									+'<td>'+syain.syainId+'</td>'
 									+'<td>'+syain.syainName+'</td>'
-									+'<td><input type="button" name="edit" value="編集" id="'+syain.syainId+'" onclick="editSyain(this.id);"></td>'
-									+'<td><input type="button" name="delete" value="削除" id="'+syain.syainId+'" onclick="deleteSyain(this.id);"></td>'
+									+'<td><input type="button" name="'+syain.syainId+'" value="編集" class="'+syain.syainId+'" onclick="editSyain(this.name);"></td>'
+									+'<td><input type="button" name="'+syain.syainId+'" value="削除" class="'+syain.syainId+'" onclick="deleteSyain(this.name);"></td>'
 									+'</tr>'
-
-
 				}
 				Element += '</table>';
 				$('#syainData').append(Element);

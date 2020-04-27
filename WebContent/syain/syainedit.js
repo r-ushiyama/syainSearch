@@ -32,7 +32,7 @@ function Sex(syainSex,Element){
 		if(Sex[i]===syainSex){
 			Check = "checked"
 		}
-		Element += '<input type="radio" name="gender" value="'+Sex[i]+'" id="syainSex" '+Check+' required>'+Sex[i]+''
+		Element += '<input type="radio" name="gender" value="'+Sex[i]+'" class="syainSex" '+Check+' required>'+Sex[i]+''
 
 	}
 	Element += '</div>'

@@ -44,6 +44,11 @@ public class SyainUpdateServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// 1 リクエストパラメータの受け取り
+		// 2 DBからのデータの取得
+		// 3 レスポンスを返す
+				
+		
 		response.setContentType("text/html; charset=UTF-8");
 		//一覧表示、追加、編集、削除のどのリクエストかを判断
 		String jsRequest = request.getParameter("request");

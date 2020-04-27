@@ -18,8 +18,8 @@ function executeAjax () {
 				var tableElement='<tr>'
 								+'<td>'+dept.deptId+'</td>'
 								+'<td>'+dept.deptName+'</td>'
-								+'<td><input type="button" name="edit" value="編集" id="'+dept.deptId+'" onclick="editDept(this.id);"></td>'
-								+'<td><input type="button" name="delete" value="削除" id="'+dept.deptId+'" onclick="deleteDept(this.id);"></td>'
+								+'<td><input type="button" name="'+dept.deptId+'" value="編集" class="'+dept.deptId+'" onclick="editDept(this.name);"></td>'
+								+'<td><input type="button" name="'+dept.deptId+'" value="削除" class="'+dept.deptId+'" onclick="deleteDept(this.name);"></td>'
 								+'</tr>'
 				$('#deptData').append(tableElement);
 			}
