@@ -5,13 +5,15 @@ function getparam(){
 	parameter = decodeURIComponent( parameter );
 	errorparam = parameter.split('=')[1];
 	if(errorparam==0){
-		$('#message').html('<font color="00FFFF" size="16">データベースへの登録が完了しました</font>');
+		$('#message').html('<font color="00FFFF" size="6">データベースへの登録が完了しました</font>');
 	}else if(errorparam==1){
-		$('#message').html('<font color="FF0000" size="16">データベースへの登録に失敗しました</font>');
+		$('#message').html('<font color="FF0000" size="6">データベースへの登録に失敗しました</font>');
 	}else{
 		location.href = '/syainSearch/syain/syaintable.html';
 	}
 }
+
+//社員情報トップへ
 function gotop(){
 	location.href = '/syainSearch/syain/syaintable.html';
 }
@@ -22,9 +24,4 @@ $(document).ready(function () {
 
 	//パラメータが入力されているか確認
 	getparam();
-
-	// 更新ボタンにイベント設定
-	$('#confirm').bind('click',confirm);
-
-
 });

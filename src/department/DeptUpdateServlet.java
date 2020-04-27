@@ -78,9 +78,6 @@ public class DeptUpdateServlet extends HttpServlet {
 			System.out.println("リクエストが指定されていません");
 		}
 
-
-
-
 		//DBのURL,ID,PASSを取得
 		Map<String, String> conInfo = ConnectDb.loadDB();
 

@@ -5,10 +5,6 @@ function setdeptName () {
 			"deptId" : deptId
 	};
 	'use strict';
-	// --------------- TODO 編集ここから---------------
-
-	console.dir(requestQuery);
-
 	$.ajax({
 		type : 'GET',
 		url : '/syainSearch/DeptServlet',
@@ -21,7 +17,6 @@ function setdeptName () {
 		}
 
 	});
-	// ---------------ここまで---------------
 }
 
 //部署の更新と追加
@@ -32,9 +27,6 @@ function changeDept(deptId,inputValue,request){
 			"newName" : inputValue
 	};
 	'use strict';
-
-	console.dir(requestQuery);
-
 	$.ajax({
 		type : 'POST',
 		url : '/syainSearch/DeptUpdateServlet',
@@ -65,7 +57,6 @@ function getparam(){
 	}
 }
 
-
 //設定ボタンを押した際に実行
 function confirm(){
 	var inputValue = $('#inputName').val();
@@ -77,19 +68,20 @@ function confirm(){
 		if(!deptId){
 			var request = "createDept"
 			changeDept(deptId,inputValue,request);
-			//console.log("部署を新規作成します")
 		}else{
 			var request = "updateDept"
 			changeDept(deptId,inputValue,request);
-			//console.log("部署名を編集します")
 		}
 	}
 
 }
 
+//キャンセル
 function cancel(){
 	location.href = '/syainSearch/department/depttable.html';
 }
+
+
 $(document).ready(function () {
 
 	'use strict';

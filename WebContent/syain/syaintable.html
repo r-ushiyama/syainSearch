@@ -10,19 +10,16 @@
 <script type="text/javascript" src="syaintable.js"></script>
 </head>
 <body>
-<!-- TODO ここから必要なHTML/CSS/JavaScriptのコードを書いて下さい -->
-	<div id="table">
-		<table id="syainData">
-			<tr>
-				<th>社員ID</th>
-				<th>名前</th>
-			</tr>
-		</table>
+	<div id="comment">社員一覧：</div>
+	<div id="userInput"></div>
+	<div id="syainData"></div>
+
+	<div id="button">
+		<input type="button" value="新規追加" id="addSyain" onclick="editSyain(this.id);">
+		<br>
+		<input type="button" value="社員検索" id="searchSyain" onclick="location.href = '/syainSearch/syain/syainsearch.html';">
+		<br>
+		<input type="button" value="部署情報" id="goDept" onclick="location.href = '/syainSearch/department/depttable.html';">
 	</div>
-	<input type="button" value="新規追加" id="addSyain" onclick="editSyain(this.id);">
-
-
-
-<!-- ここまで -->
 </body>
 </html>

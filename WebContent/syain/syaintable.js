@@ -12,20 +12,31 @@ function executeAjax () {
 		data :requestQuery,
 		success : function (json) {
 			// DOM操作
-			console.log(json)
+			if(json.length==0){
+				$('#userInput').append("登録されている社員がいません");
+			}else{
+				var Element = '<table id="syainData">'
+					//+'<tr>'
+					+'<th>社員ID</th>'
+					+'<th>名前</th>'
+					//+'</tr>'
+				for(var i=0;i<json.length;i++){
+					var syain = json[i];
+					var syainName = syain.syainName
+					Element += '<tr>'
+									+'<td>'+syain.syainId+'</td>'
+									+'<td>'+syain.syainName+'</td>'
+									+'<td><input type="button" name="edit" value="編集" id="'+syain.syainId+'" onclick="editSyain(this.id);"></td>'
+									+'<td><input type="button" name="delete" value="削除" id="'+syain.syainId+'" onclick="deleteSyain(this.id);"></td>'
+									+'</tr>'
 
 
-			for(var i=0;i<json.length;i++){
-				var syain = json[i];
-				var syainName = syain.syainName
-				var tableElement='<tr>'
-								+'<td>'+syain.syainId+'</td>'
-								+'<td>'+syain.syainName+'</td>'
-								+'<td><input type="button" name="edit" value="編集" id="'+syain.syainId+'" onclick="editSyain(this.id);"></td>'
-								+'<td><input type="button" name="delete" value="削除" id="'+syain.syainId+'" onclick="deleteSyain(this.id);"></td>'
-								+'</tr>'
-				$('#syainData').append(tableElement);
+				}
+				Element += '</table>';
+				$('#syainData').append(Element);
 			}
+
+
 		}
 	});
 }
@@ -36,10 +47,8 @@ function editSyain(id_value){
 	var edit_syainId = id_value;
 
 	if(edit_syainId==='addSyain'){
-		console.log('新規追加します');
 		location.href = '/syainSearch/syain/syainedit.html';
 	}else{
-		console.log(edit_syainId+' の社員を編集します');
 		location.href = '/syainSearch/syain/syainedit.html?syainid='+edit_syainId;
 
 	}
@@ -50,11 +59,13 @@ function editSyain(id_value){
 function deleteSyain(id_value){
 	//押したボタンの部署IDを代入
 	var requestQuery = {
-			"syainId" : id_value,
+			"oldsyainId" : id_value,
 			"request" : "deleteSyain"
 	};
-	console.log(requestQuery+'の部署を削除します');
+	//console.log(id_value+'の社員を削除します');
 	'use strict';
+
+
 	$.ajax({
 		type : 'POST',
 		url : '/syainSearch/SyainUpdateServlet',
@@ -69,6 +80,7 @@ function deleteSyain(id_value){
 	       alert('エラーが発生したため削除することができませんでした。');
 	    }
 	});
+
 }
 
 //ページ読み込み時

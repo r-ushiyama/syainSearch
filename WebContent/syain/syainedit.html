@@ -1,26 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>社員編集</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<!-- CSSの読み込み -->
-<link rel="stylesheet" type="text/css" href="../style.css" />
-<!-- JavaScriptの読み込み -->
-<script type="text/javascript" src="../jquery-1.10.2.js"></script>
-<script type="text/javascript" src="syainedit.js"></script>
+	<meta charset="UTF-8">
+	<title>社員編集</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<!-- CSSの読み込み -->
+	<link rel="stylesheet" type="text/css" href="../style.css" />
+	<!-- JavaScriptの読み込み -->
+	<script type="text/javascript" src="../jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="syainedit.js"></script>
 </head>
 <body>
-<div id="comment"><font size="16">社員データを修正します</font></div>
-<div id="syainInfo">
-
-
-</div>
-
-<input type="button" value="設定" id="confirm">
-<br>
-<input type="button" value="キャンセル" id="cancel" onclick="cancel();">
-
+	<div id="comment"><font size="16">社員データを修正します</font></div>
+	<div id="syainInfo"></div>
+	<div id="button">
+		<input type="button" value="設定" id="confirm" onclick="confirm();">
+		<br>
+		<input type="button" value="キャンセル" id="cancel" onclick="cancel();">
+	</div>
 
 </body>
 </html>

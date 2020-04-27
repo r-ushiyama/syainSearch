@@ -12,8 +12,6 @@ function executeAjax () {
 		data :requestQuery,
 		success : function (json) {
 			// DOM操作
-			console.log(json)
-
 			for(var i=0;i<json.length;i++){
 				var dept = json[i];
 				var deptName = dept.deptName
@@ -34,24 +32,21 @@ function editDept(id_value){
 	//押したボタンの部署IDを代入
 	var edit_deptId = id_value;
 	if(edit_deptId==='addDept'){
-		console.log('新規追加します');
 		location.href = '/syainSearch/department/deptedit.html';
 	}else{
-		console.log(edit_deptId+' の部署を編集します');
 		location.href = '/syainSearch/department/deptedit.html?deptid='+edit_deptId;
 
 	}
 
 }
 
-//削除ボタンをクリック、即削除
+//削除ボタンをクリック、！即削除
 function deleteDept(id_value){
 	//押したボタンの部署IDを代入
 	var requestQuery = {
 			"deptId" : id_value,
 			"request" : "deleteDept"
 	};
-	console.log(requestQuery+'の部署を削除します');
 	'use strict';
 	$.ajax({
 		type : 'POST',
@@ -60,7 +55,6 @@ function deleteDept(id_value){
 		data :requestQuery,
 		success : function (json) {
 			// DOM操作
-			console.log(json)
 			location.href = '/syainSearch/department/depttable.html';
 		},
 		error: function (json) {

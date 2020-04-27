@@ -47,7 +47,8 @@ public class SyainUpdateServlet extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 		//一覧表示、追加、編集、削除のどのリクエストかを判断
 		String jsRequest = request.getParameter("request");
-		String syainId = request.getParameter("syainId");
+		String oldsyainId = request.getParameter("oldsyainId");
+		String newsyainId = request.getParameter("newsyainId");
 		String syainName = request.getParameter("syainName");
 		String syainAge = request.getParameter("syainAge");
 		String syainSex = request.getParameter("syainSex");
@@ -58,39 +59,50 @@ public class SyainUpdateServlet extends HttpServlet {
 		String syainDeptName = request.getParameter("syainDeptName");
 		String syainJoinDate = request.getParameter("syainJoinDate");
 		String syainLeaveDate = request.getParameter("syainLeaveDate");
-		System.out.println(syainId + syainName + syainAge + syainSex + syainZip + syainPref + syainAddress + syainDeptName + syainJoinDate + "退社日:"+syainLeaveDate);
 
-		//String jsRequest = "depttable";
+
 		String sql = "";
 		String excute_message = "";
 
-
 		if(jsRequest.equals("updateSyainInfo")){
 			//部署名を編集（アップデート）
-			sql = "update TR_DEPT \n" +
-					"set DEPT_NAME = '"+newName+"' \n" +
-					"where DEPT_ID = '"+deptId+"' \n";
-			excute_message = "部署名を"+newName+"に変更しました";
-		}/*else if(jsRequest.equals("createDept")){
-			sql = "insert into TR_DEPT \n" +
-					"(DEPT_ID,DEPT_NAME) \n" +
-					"select \n" +
-					"CONCAT('D', LPAD(count(*)+1,2,'0')),'"+newName+"' \n" +
-					"from \n" +
-					"TR_DEPT \n" +
-					"order by \n" +
-					"DEPT_ID\n";
-			excute_message = newName+"を追加しました";
-		}else if(jsRequest.equals("deleteDept")){
-			sql = "delete from TR_DEPT \n" +
-					"where DEPT_ID = '"+deptId+"' \n";
-			excute_message = newName+"を削除しました";
+			sql = "update TR_SYAIN\n" +
+					"set \n" +
+					"TR_SYAIN.DEPT_ID=( \n" +
+					"	select TR_DEPT.DEPT_ID\n" +
+					"	from TR_DEPT\n" +
+					"	where 1=1 \n" +
+					"	and TR_DEPT.DEPT_NAME='"+syainDeptName+"' \n" + //syainDeptName
+					"), \n" +
+					"TR_SYAIN.ID='"+newsyainId+"', \n" +
+					"TR_SYAIN.NAME='"+syainName+"', \n" +
+					"TR_SYAIN.AGE='"+syainAge+"', \n" +
+					"TR_SYAIN.SEX='"+syainSex+"', \n" +
+					"TR_SYAIN.PHOTO_ID='"+syainPhotoId+"', \n" +
+					"TR_SYAIN.JOIN_DATE='"+syainJoinDate+"', \n" +
+					"TR_SYAIN.LEAVE_DATE='"+syainLeaveDate+"', \n" +
+					"TR_SYAIN.ZIP='"+syainZip+"', \n" +
+					"TR_SYAIN.PREFECTURE='"+syainPref+"',\n" +
+					"TR_SYAIN.ADDRESS='"+syainAddress+"' \n" +
+					"where TR_SYAIN.ID='"+oldsyainId+"' \n"; //oldsyainId
+			excute_message = "社員情報を変更しました";
+
+		}
+
+		else if(jsRequest.equals("createSyain")){
+			sql = "insert into TR_SYAIN \n" +
+					"(ID, NAME, AGE, SEX, PHOTO_ID, DEPT_ID, JOIN_DATE, LEAVE_DATE, ZIP, PREFECTURE, ADDRESS) \n" +
+					"select '"+newsyainId+"', '"+syainName+"', '"+syainAge+"', '"+syainSex+"', '"+syainPhotoId+"', TR_DEPT.DEPT_ID,'"+syainJoinDate+"', '"+syainLeaveDate+"', '"+syainZip+"', '"+syainPref+"', '"+syainAddress+"' \n" +
+					"from TR_DEPT \n" +
+					"where TR_DEPT.DEPT_NAME='"+syainDeptName+"' \n";
+			excute_message = "社員情報を追加しました";
+		}else if(jsRequest.equals("deleteSyain")){
+			sql = "delete from TR_SYAIN \n" +
+					"where TR_SYAIN.ID = '"+oldsyainId+"' \n";
+			excute_message = "社員情報を削除しました";
 		}else{
 			System.out.println("リクエストが指定されていません");
 		}
-		 */
-
-
 
 		//DBのURL,ID,PASSを取得
 		Map<String, String> conInfo = ConnectDb.loadDB();

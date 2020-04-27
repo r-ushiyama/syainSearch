@@ -5,9 +5,11 @@ table {
 	/* 枠線 */
 	border-collapse: collapse;
 	border-right: 1px solid #999;
+	text-align:center;
 }
 
 table th {
+	align:center;
 	/* 内部余白 */
 	padding: 10px;
 	/* 枠線 */
@@ -15,13 +17,15 @@ table th {
 	/* 文字色 */
 	color: #fff;
 	/* 文字表示 */
-	text-align: left;
+	text-align: center;
 	vertical-align: top;
 	/* 背景色 */
 	background-color: #555;
+
 }
 
 table td {
+	align:center;
 	/* 内部余白 */
 	padding: 6px;
 	/* 枠線 */
@@ -30,7 +34,20 @@ table td {
 	background-color: #fff;
 }
 
-#syainInfo{
-	margin:10px;
 
+input,select,check{
+	margin:10px;
+	font-size:20px;
+}
+
+body{
+	margin:15px 0px 0px 15px;
+}
+
+#addSyain,#searchSyain,#cancel,#confirm,#addDept,#gotop,#goDept,#goSyain{
+	margin-left:0px
+}
+
+html{
+	font-size:20px;
 }

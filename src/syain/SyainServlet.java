@@ -43,6 +43,9 @@ public class SyainServlet extends HttpServlet {
 				//一覧表示、追加、編集、削除のどのリクエストかを判断
 				String syainId = request.getParameter("syainId");
 				String jsRequest = request.getParameter("request");
+				String syainName = request.getParameter("syainName");
+				String syainDeptName = request.getParameter("syainDeptName");
+
 				//String jsRequest = "syaintable";
 				String sql = "";
 
@@ -59,6 +62,14 @@ public class SyainServlet extends HttpServlet {
 							"from TR_SYAIN,TR_DEPT \n" +
 							"where 1=1 \n" +
 							"and ID='"+syainId+"' \n" +
+							"and TR_SYAIN.DEPT_ID = TR_DEPT.DEPT_ID \n";
+				}else if(jsRequest.equals("searchSyain")){
+					sql = "select TR_DEPT.DEPT_NAME,TR_SYAIN.DEPT_ID,ID,NAME,AGE,SEX,PHOTO_ID,JOIN_DATE,LEAVE_DATE,ZIP,PREFECTURE,ADDRESS \n" +
+							"from TR_SYAIN,TR_DEPT \n" +
+							"where 1=1 \n" +
+							"and TR_DEPT.DEPT_NAME LIKE '%"+syainDeptName+"%' \n" +
+							"and TR_SYAIN.ID LIKE '%"+syainId+"%' \n" +
+							"and TR_SYAIN.NAME LIKE '%"+syainName+"%' \n" +
 							"and TR_SYAIN.DEPT_ID = TR_DEPT.DEPT_ID \n";
 				}else{
 					System.out.println("リクエストが指定されていません");
