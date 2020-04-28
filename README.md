@@ -1,1 +1,1 @@
-commit 1 「部署名出力」機能を実装
+Employees Database Management Tool
