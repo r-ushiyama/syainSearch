@@ -1,17 +1,23 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<classpath>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/java8">
-		<attributes>
-			<attribute name="owner.project.facets" value="java"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v8.0">
-		<attributes>
-			<attribute name="owner.project.facets" value="jst.web"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
-	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="output" path="build/classes"/>
-</classpath> 
+
+	    response.setContentType("text/html; charset=shift-jis");
+	    if (userId.equals(/*request.getParameter("username")*/Id) == true
+	      && password.equals(/*request.getParameter("password")*/Pass) == true) {
+	      //セッション情報の新規作成
+	      HttpSession session = request.getSession(true);
+	      //セッションオブジェクトに保存する
+	      session.setAttribute("username", userId);
+
+	      System.out.println("ログインしました");
+
+	      Object ID = session.getAttribute("username");
+	      System.out.println(ID);
+	   // アクセスした人に応答するためのJSONを用意する
+	      PrintWriter pw = response.getWriter();
+	      Map <String, String> responseData = new HashMap<>();
+	      responseData.put("result", "ok");
+	   	// JSONで出力する
+	      pw.append(new ObjectMapper().writeValueAsString(responseData));
+	    } else {
+	      System.out.println("NG パスワードまたはユーザー名が違います");
+	    }
+	  }

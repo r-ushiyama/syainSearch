@@ -90,6 +90,7 @@ public class DeptUpdateServlet extends HttpServlet {
 
 		) {
 
+			@SuppressWarnings("unused")
 			int rs1 = stmt.executeUpdate(sql);
 
 			// アクセスした人に応答するためのJSONを用意する

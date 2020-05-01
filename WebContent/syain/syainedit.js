@@ -1,4 +1,41 @@
+function getUserData() {
+	// 入力されたユーザーIDとパスワード
+	var requestQuery = {};
+	// サーバーからデータを取得する
+	$.ajax({
+		type : 'POST',
+		dataType:'json',
+		url : '/syainSearch/GetLoginInfoServlet',
+		data : requestQuery,
+		success : function(json) {
+			// サーバーとの通信に成功した時の処理
+			console.dir(json)
+			if(!json.userId){
+				$('#syainId').html('ログインが必要です。');
+				var Element = '<input type="button" value="ログイン画面へ" id="goSyain" onclick="location.href = \'/syainSearch/login.html\';">'
+				$('#button').append(Element);
 
+			}else{
+				var parameter  = location.search.substring( 1, location.search.length );
+				parameter = decodeURIComponent( parameter );
+				syainId = parameter.split('=')[1];
+				if(syainId===json.userId){
+					getparam(syainId);
+				}else if(json.userRoll==="マネージャー"){
+					getparam(syainId);
+				}else{
+					alert("権限がありません");
+					location.href = '/syainSearch/syain/syaintable.html';
+				}
+			}
+		},
+		error:function(XMLHttpRequest, textStatus, errorThrown){
+			// サーバーとの通信に失敗した時の処理
+			alert('データの通信に失敗しました');
+			console.log(errorThrown)
+		}
+	});
+}
 
 //社員情報内に都道府県名をセット
 function Pref(syainPref,Element){
@@ -150,11 +187,8 @@ function inputSyainInfo(deptName){
 }
 
 //URLパラメータを取得
-function getparam(){
+function getparam(syainId){
 	//URLから部署IDを取得する。nullの場合は部署の新規作成
-	var parameter  = location.search.substring( 1, location.search.length );
-	parameter = decodeURIComponent( parameter );
-	syainId = parameter.split('=')[1];
 	if(!syainId){
 		$('#comment').html('<font size="16">社員データを新規作成</font>')
 		var req="add"
@@ -226,9 +260,9 @@ function cancel(){
 $(document).ready(function () {
 
 	'use strict';
-
+	getUserData()
 	//パラメータが入力されているか確認
-	getparam();
+
 
 
 });

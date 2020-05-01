@@ -47,8 +47,8 @@ public class SyainUpdateServlet extends HttpServlet {
 		// 1 リクエストパラメータの受け取り
 		// 2 DBからのデータの取得
 		// 3 レスポンスを返す
-				
-		
+
+
 		response.setContentType("text/html; charset=UTF-8");
 		//一覧表示、追加、編集、削除のどのリクエストかを判断
 		String jsRequest = request.getParameter("request");
@@ -122,6 +122,7 @@ public class SyainUpdateServlet extends HttpServlet {
 
 		) {
 
+			@SuppressWarnings("unused")
 			int rs1 = stmt.executeUpdate(sql);
 
 			// アクセスした人に応答するためのJSONを用意する
