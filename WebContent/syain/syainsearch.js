@@ -1,3 +1,32 @@
+function getUserData() {
+	// 入力されたユーザーIDとパスワード
+	var requestQuery = {};
+	// サーバーからデータを取得する
+	$.ajax({
+		type : 'POST',
+		dataType:'json',
+		url : '/syainSearch/GetLoginInfoServlet',
+		data : requestQuery,
+		success : function(json) {
+			// サーバーとの通信に成功した時の処理
+			console.dir(json)
+			if(!json.userId){
+				$('#comment').html('ログインが必要です。');
+				var Element = '<input type="button" value="ログイン画面へ" id="goSyain" onclick="location.href = \'/syainSearch/login.html\';">'
+				$('#button').append(Element);
+
+			}else{
+				createInputbox();
+			}
+		},
+		error:function(XMLHttpRequest, textStatus, errorThrown){
+			// サーバーとの通信に失敗した時の処理
+			alert('データの通信に失敗しました');
+			console.log(errorThrown)
+		}
+	});
+}
+
 //部署をプルダウンメニューとして表示
 function Dept(deptName,Element){
 	Element += '所属:<select name="Dept" id="Dept">'
@@ -28,11 +57,15 @@ function createInputbox() {
 				var dept = json[i];
 				deptName.push(dept.deptName);
 			}
+			$('#comment').append('<font size="16">社員検索</font>')
 			var Element = '';
 			Element = Dept(deptName,Element);
 			Element += '社員ID：<input type="text" id="syainId" placeholder="EMP0001"><br>'
 					+'名前に含む文字：<input type="text" id="syainName" placeholder="田中太郎">'
 			$('#userInput').append(Element);
+
+			$('#button').append('<input type="button" value="検索" id="searchSyain" onclick="searchSyain();"><br>')
+			$('#button').append('<input type="button" value="キャンセル" id="cancel" onclick="cancel();">')
 		}
 	});
 }
@@ -105,7 +138,8 @@ $(document).ready(function () {
 	'use strict';
 
 	//パラメータが入力されているか確認
-	createInputbox();
+	getUserData();
+
 
 
 });

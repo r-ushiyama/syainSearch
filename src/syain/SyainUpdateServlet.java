@@ -97,7 +97,8 @@ public class SyainUpdateServlet extends HttpServlet {
 		else if(jsRequest.equals("createSyain")){
 			sql = "insert into TR_SYAIN \n" +
 					"(ID, NAME, AGE, SEX, PHOTO_ID, DEPT_ID, JOIN_DATE, LEAVE_DATE, ZIP, PREFECTURE, ADDRESS) \n" +
-					"select '"+newsyainId+"', '"+syainName+"', '"+syainAge+"', '"+syainSex+"', '"+syainPhotoId+"', TR_DEPT.DEPT_ID,'"+syainJoinDate+"', '"+syainLeaveDate+"', '"+syainZip+"', '"+syainPref+"', '"+syainAddress+"' \n" +
+					"select '"+newsyainId+"', '"+syainName+"', '"+syainAge+"', '"+syainSex+"', '"+syainPhotoId+"', TR_DEPT.DEPT_ID,'"+syainJoinDate+"', '"+syainLeaveDate+"', "
+							+ "'"+syainZip+"', '"+syainPref+"', '"+syainAddress+"' \n" +
 					"from TR_DEPT \n" +
 					"where TR_DEPT.DEPT_NAME='"+syainDeptName+"' \n";
 			excute_message = "社員情報を追加しました";
