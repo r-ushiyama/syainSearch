@@ -139,8 +139,11 @@ function executeAjax (userRoll,userName) {
 							+'<td>'+exp.reason+'</td>'
 							+'<td>'+status+'</td>'
 							+'<td>'+exp.updateName+'</td>'
-							+'<td>'+exp.denyReason+'</td>'
-							+'</tr>';
+							if(exp.status=="2"){
+								status ="<font color='red'>却下</font>"
+								tableElement += '<td>'+exp.denyReason+'</td>'
+							}
+							tableElement +='</tr>';
 					}
 					tableElement += '</table>';
 					$('#expData').append(tableElement);
@@ -187,8 +190,11 @@ function executeAjax (userRoll,userName) {
 							+'<td>'+exp.reason+'</td>'
 							+'<td>'+status+'</td>'
 							+'<td>'+exp.updateName+'</td>'
-							+'<td>'+exp.denyReason+'</td>'
-										+'</tr>';
+							if(exp.status=="2"){
+								status ="<font color='red'>却下</font>"
+								tableElement += '<td>'+exp.denyReason+'</td>'
+							}
+						tableElement +='</tr>';
 					}
 					$('#expData').append(tableElement);
 					tableElement += '</table>';

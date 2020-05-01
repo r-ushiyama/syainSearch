@@ -1,3 +1,5 @@
+userName = "";
+userId = "";
 function getUserData() {
 
 	// 入力されたユーザーIDとパスワード
@@ -18,7 +20,8 @@ function getUserData() {
 
 			}else{
 				userRoll = json.userRoll
-				executeAjax(json.userRoll,json.userName);
+				userName = json.userName
+				inputExp()
 			}
 		},
 		error:function(XMLHttpRequest, textStatus, errorThrown){
@@ -28,37 +31,51 @@ function getUserData() {
 		}
 	});
 }
-//
-function executeAjax (userRoll,userName) {
-	'use strict';
-	var requestQuery = {"expId":"all"};
-	$.ajax({
-		type : 'GET',
-		url : '/syainSearch/GetExpenseServlet',
-		dataType : 'json',
-		data :requestQuery,
-		success : function (json) {
-			// DOM操作
-			console.dir(json);
-
-					$('#button').append('<input type="button" value="新規追加" id="addExp" onclick="addExp(this.id);"><br>')
-					$('#button').append('<input type="button" value="社員情報" id="searchSyain" onclick="location.href = \'/syainSearch/syain/syaintable.html\';"><br>')
-					$('#button').append('<input type="button" value="部署情報" id="goDept" onclick="location.href = \'/syainSearch/department/depttable.html\';"><br>')
-					$('#button').append('<input type="button" value="ログアウト" id="logout" onclick="location.href = \'../index.html?request=logout\';">')
-
-
-
+function confirm(){
+	var requestQuery = {
+			"Title" : $('#Title').val(),
+			"Payee" : $('#Payee').val(),
+			"Amount" : $('#Amount').val(),
+			"Reason" : $('#Reason').val(),
+			"userName" : userName
 		}
-	});
+
+		if(!$('#Title').val()||!$('#Payee').val()||!$('#Amount').val()||!$('#Reason').val()||isNaN($('#Amount').val())){
+			alert("正常に入力されていません")
+		}else{
+			$.ajax({
+				type : 'POST',
+				dataType:'json',
+				url : '/syainSearch/ExpenseAddServlet',
+				data : requestQuery,
+				success : function(json) {
+					// サーバーとの通信に成功した時の処理
+					alert("経費を申請しました");
+					location.href = '/syainSearch/expense/expensetable.html';
+				},
+				error:function(XMLHttpRequest, textStatus, errorThrown){
+					// サーバーとの通信に失敗した時の処理
+					alert('データの通信に失敗しました');
+					console.log(errorThrown)
+				}
+			});
+		}
 }
+function inputExp(){
+		var Element='タイトル:<input id="Title" placeholder="文房具の購入" required></br>'
+		+'名前:<input id="Payee" placeholder="株式会社○○" required></br>'
+		+'金額:<input id="Amount" placeholder="1100" required></br>'
+		+'理由:<input type="text" id="Reason" placeholder="会議室に文具を配備するため"></br>'
+		$('#expData').append(Element);
+		$('#button').append('<input type="button" value="設定" id="confirm" onclick="confirm();"><br>')
+		$('#button').append('<input type="button" value="キャンセル" onclick="location.href = \'/syainSearch/expense/expensetable.html\';">')
 
 
+}
 //ページ読み込み時
 $(document).ready(function () {
 	'use strict';
 	// 初期表示用
 	getUserData();
 
-	// 更新ボタンにイベント設定
-	$('#searchBtn').bind('click',executeAjax);
 });

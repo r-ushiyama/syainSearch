@@ -47,11 +47,11 @@ public class GetExpenseServlet extends HttpServlet {
 		if(jsReq.equals("all")){
 			sql = "select EXPENSE_ID, REQ_DATE, APP_NAME, TITLE, PAYEE, AMOUNT,  \n" +
 					"	UPDATE_DATE, UPDATE_NAME, STATUS, REASON, DENY_REASON \n" +
-					"from TR_EXPENSE \n";
+					"from TR_EXPENSE order by EXPENSE_ID\n";
 		}else{
 			sql = "select EXPENSE_ID, REQ_DATE, APP_NAME, TITLE, PAYEE, AMOUNT,  \n" +
 					"	UPDATE_DATE, UPDATE_NAME, STATUS, REASON, DENY_REASON \n" +
-					"from TR_EXPENSE where EXPENSE_ID='"+jsReq+"'\n";
+					"from TR_EXPENSE where EXPENSE_ID='"+jsReq+"' order by EXPENSE_ID\n";
 		}
 
 
