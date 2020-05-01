@@ -1,6 +1,34 @@
+function getUserData() {
+	// 入力されたユーザーIDとパスワード
+	var requestQuery = {};
+	// サーバーからデータを取得する
+	$.ajax({
+		type : 'POST',
+		dataType:'json',
+		url : '/syainSearch/GetLoginInfoServlet',
+		data : requestQuery,
+		success : function(json) {
+			// サーバーとの通信に成功した時の処理
+			console.dir(json)
+			if(!json.userId){
+				$('#comment').html('ログインが必要です。');
+				var Element = '<input type="button" value="ログイン画面へ" id="goSyain" onclick="location.href = \'/syainSearch/login.html\';">'
+				$('#button').append(Element);
 
+			}else{
+				userRoll = json.userRoll
+				executeAjax(json.userRoll);
+			}
+		},
+		error:function(XMLHttpRequest, textStatus, errorThrown){
+			// サーバーとの通信に失敗した時の処理
+			alert('データの通信に失敗しました');
+			console.log(errorThrown)
+		}
+	});
+}
 // 部署一覧表示
-function executeAjax () {
+function executeAjax (userRoll) {
 	'use strict';
 	var requestQuery = {
 			"request":"depttable"
@@ -12,17 +40,44 @@ function executeAjax () {
 		data :requestQuery,
 		success : function (json) {
 			// DOM操作
-			for(var i=0;i<json.length;i++){
-				var dept = json[i];
-				var deptName = dept.deptName
-				var tableElement='<tr>'
-								+'<td>'+dept.deptId+'</td>'
-								+'<td>'+dept.deptName+'</td>'
-								+'<td><input type="button" name="'+dept.deptId+'" value="編集" class="'+dept.deptId+'" onclick="editDept(this.name);"></td>'
-								+'<td><input type="button" name="'+dept.deptId+'" value="削除" class="'+dept.deptId+'" onclick="deleteDept(this.name);"></td>'
-								+'</tr>'
+			var tableElement = '<table id="deptData">'
+			+'<tr>'
+			+'<th>ID</th>'
+			+'<th>部署名</th>'
+			+'</tr>'
+			console.log(tableElement)
+			if(userRoll==="マネージャー"){
+				for(var i=0;i<json.length;i++){
+					var dept = json[i];
+					var deptName = dept.deptName
+					tableElement += '<tr>'
+									+'<td>'+dept.deptId+'</td>'
+									+'<td>'+dept.deptName+'</td>'
+									+'<td><input type="button" name="'+dept.deptId+'" value="編集" class="'+dept.deptId+'" onclick="editDept(this.name);"></td>'
+									+'<td><input type="button" name="'+dept.deptId+'" value="削除" class="'+dept.deptId+'" onclick="deleteDept(this.name);"></td>'
+									+'</tr>';
+
+
+				}
 				$('#deptData').append(tableElement);
+				tableElement += '</table>';
+				console.log(tableElement)
+				$('#button').append('<input type="button" value="新規追加" id="addDept" onclick="editDept(this.id);"><br>')
+				$('#button').append('<input type="button" value="社員情報" id="goSyain" onclick="location.href = \'/syainSearch/syain/syaintable.html\';">')
+			}else if(userRoll==="メンバー"){
+				for(var i=0;i<json.length;i++){
+					var dept = json[i];
+					var deptName = dept.deptName
+					tableElement+='<tr>'
+									+'<td>'+dept.deptId+'</td>'
+									+'<td>'+dept.deptName+'</td>'
+									+'</tr>'
+				}
+				$('#deptData').append(tableElement);
+				tableElement += '</table>';
+				$('#button').append('<input type="button" value="社員情報" id="goSyain" onclick="location.href = \'/syainSearch/syain/syaintable.html\';">')
 			}
+
 		}
 	});
 }
@@ -67,8 +122,6 @@ function deleteDept(id_value){
 $(document).ready(function () {
 	'use strict';
 	// 初期表示用
-	executeAjax();
+	getUserData();
 
-	// 更新ボタンにイベント設定
-	$('#searchBtn').bind('click',executeAjax);
 });

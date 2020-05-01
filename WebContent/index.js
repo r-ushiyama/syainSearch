@@ -26,7 +26,8 @@ function getUserData() {
 				$('#button').append(Element);
 
 			}else{
-				$('#syainId').html('ようこそ'+json.userName+'さん');
+				$('#syainId').html('ようこそ'+json.userName+'さん<br>');
+				$('#syainId').append('あなたの役職は「'+json.userRoll+'」です');
 				var Element = '<input type="button" value="社員情報" id="goSyain" onclick="location.href = \'/syainSearch/syain/syaintable.html\';">'
 					+'<br>'
 					+'<input type="button" value="部署情報" id="goDept" onclick="location.href = \'/syainSearch/department/depttable.html\';">'

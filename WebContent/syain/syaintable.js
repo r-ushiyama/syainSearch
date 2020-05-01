@@ -11,7 +11,7 @@ function getUserData() {
 			// サーバーとの通信に成功した時の処理
 			console.dir(json)
 			if(!json.userId){
-				$('#syainId').html('ログインが必要です。');
+				$('#comment').html('ログインが必要です。');
 				var Element = '<input type="button" value="ログイン画面へ" id="goSyain" onclick="location.href = \'/syainSearch/login.html\';">'
 				$('#button').append(Element);
 
@@ -43,6 +43,7 @@ function executeAjax (userRoll,userId) {
 			if(json.length==0){
 				$('#userInput').append("登録されている社員がいません");
 			}else{
+				$('#comment').html('社員一覧：')
 				if(userRoll=="マネージャー"){
 					var Element = '<table id="syainData">'
 						//+'<tr>'
@@ -149,7 +150,6 @@ $(document).ready(function () {
 	'use strict';
 	// 初期表示用
 	getUserData();
-	executeAjax();
 
 	// 更新ボタンにイベント設定
 	$('#searchBtn').bind('click',executeAjax);

@@ -1,3 +1,43 @@
+function getUserData() {
+	// 入力されたユーザーIDとパスワード
+	var requestQuery = {};
+	// サーバーからデータを取得する
+	$.ajax({
+		type : 'POST',
+		dataType:'json',
+		url : '/syainSearch/GetLoginInfoServlet',
+		data : requestQuery,
+		success : function(json) {
+			// サーバーとの通信に成功した時の処理
+			console.dir(json)
+			if(!json.userId){
+				$('#comment').html('ログインが必要です。');
+				var Element = '<input type="button" value="ログイン画面へ" id="goSyain" onclick="location.href = \'/syainSearch/login.html\';">'
+				$('#button').append(Element);
+
+			}else{
+				var parameter  = location.search.substring( 1, location.search.length );
+				parameter = decodeURIComponent( parameter );
+				deptId = parameter.split('=')[1];
+				if(json.userRoll==="マネージャー"){
+					$('#comment').append('名前：<input type="text" id="inputName">')
+					$('#button').append('<input type="button" value="設定" id="confirm"><br>')
+					$('#button').append('<input type="button" value="キャンセル" id="cancel" onclick="cancel();">')
+
+					getparam(deptId);
+				}else{
+					alert("権限がありません");
+					location.href = '/syainSearch/syain/syaintable.html';
+				}
+			}
+		},
+		error:function(XMLHttpRequest, textStatus, errorThrown){
+			// サーバーとの通信に失敗した時の処理
+			alert('データの通信に失敗しました');
+			console.log(errorThrown)
+		}
+	});
+}
 //部署の名前をHTMLにセットする
 function setdeptName () {
 	var requestQuery = {
@@ -45,12 +85,7 @@ function changeDept(deptId,inputValue,request){
 }
 
 //パラメータが入力されているか確認
-function getparam(){
-	//URLから部署IDを取得する。nullの場合は部署の新規作成
-	var parameter  = location.search.substring( 1, location.search.length );
-	parameter = decodeURIComponent( parameter );
-	deptId = parameter.split('=')[1];
-
+function getparam(deptId){
 	if(!deptId){
 		$('#comment').html('<font size="6">部署データを新規作成</font>')
 	}else{
@@ -89,10 +124,7 @@ $(document).ready(function () {
 	'use strict';
 
 	//パラメータが入力されているか確認
-	getparam();
-
-	// 更新ボタンにイベント設定
-	$('#confirm').bind('click',confirm);
+	getUserData();
 
 
 });
