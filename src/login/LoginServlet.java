@@ -66,6 +66,7 @@ public class LoginServlet extends HttpServlet {
 	    		"and TR_AUTH.PASS='"+password+"' \n";
 
 	    Map<String, String> conInfo = ConnectDb.loadDB();
+	    
 	    Map <String, String> responseData = new HashMap<>();
 		// DBへ接続してSQLを実行
 		try (

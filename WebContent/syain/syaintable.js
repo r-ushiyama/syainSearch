@@ -64,6 +64,7 @@ function executeAjax (userRoll,userId) {
 					$('#button').append('<input type="button" value="新規追加" id="addSyain" onclick="editSyain(this.id);"><br>')
 					$('#button').append('<input type="button" value="社員検索" id="searchSyain" onclick="location.href = \'/syainSearch/syain/syainsearch.html\';"><br>')
 					$('#button').append('<input type="button" value="部署情報" id="goDept" onclick="location.href = \'/syainSearch/department/depttable.html\';"><br>')
+					$('#button').append('<input type="button" value="経費情報" id="goExp" onclick="location.href = \'/syainSearch/expense/expensetable.html\';"><br>')
 					$('#button').append('<input type="button" value="ログアウト" id="logout" onclick="location.href = \'../index.html?request=logout\';">')
 
 				}else if(userRoll=="メンバー"){
@@ -86,6 +87,7 @@ function executeAjax (userRoll,userId) {
 					Element += '</table>';
 					$('#button').append('<input type="button" value="社員検索" id="searchSyain" onclick="location.href = \'/syainSearch/syain/syainsearch.html\';"><br>')
 					$('#button').append('<input type="button" value="部署情報" id="goDept" onclick="location.href = \'/syainSearch/department/depttable.html\';"><br>')
+					$('#button').append('<input type="button" value="経費情報" id="goExp" onclick="location.href = \'/syainSearch/expense/expensetable.html\';"><br>')
 					$('#button').append('<input type="button" value="ログアウト" id="logout" onclick="location.href = \'../index.html?request=logout\';">')
 				}
 				$('#syainData').append(Element);
