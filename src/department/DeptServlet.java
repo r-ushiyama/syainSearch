@@ -31,6 +31,7 @@ public class DeptServlet extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 		//一覧表示、追加、編集、削除のどのリクエストかを判断
 		String deptId = request.getParameter("deptId");
+		String deptName = request.getParameter("deptName");
 		String jsRequest = request.getParameter("request");
 		//String jsRequest = "depttable";
 		String sql = "";
@@ -51,6 +52,15 @@ public class DeptServlet extends HttpServlet {
 					"TR_DEPT \n" +
 					"where 1=1 \n" +
 					"and DEPT_ID = '"+deptId+"' \n";
+		}else if(jsRequest.equals("searchAllDept")){
+			sql = "select DEPT_ID, DEPT_NAME \n" +
+					"from TR_DEPT \n" +
+					"where 1=1 \n" +
+					"and( \n" +
+					"DEPT_ID LIKE '%"+deptId+"%' \n" +
+					"or DEPT_NAME LIKE '%"+deptName+"%' \n" +
+					") \n" +
+					"order by DEPT_ID \n";
 		}else{
 			System.out.println("リクエストが指定されていません");
 		}

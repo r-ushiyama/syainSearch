@@ -18,7 +18,7 @@ function searchSyainAll(){
 			console.log(json)
 			$('#userInput').html('');
 			if(json.length==0){
-				$('#userInput').append('登録されている社員がいません');
+				$('#userInput').html('登録されている社員がいません');
 			}else{
 				var Element = '<table id="syainData">'
 					//+'<tr>'
@@ -36,7 +36,7 @@ function searchSyainAll(){
 						+'<td><input type="button" name="'+syain.syainId+'" value="編集" class="'+syain.syainId+'" onclick="editSyain(this.name);"></td>'
 						+'<td><input type="button" name="'+syain.syainId+'" value="削除" class="'+syain.syainId+'" onclick="deleteSyain(this.name);"></td>'
 						+'</tr>'
-					}else if(userRoll=="メンバー")
+					}else if(userRoll=="メンバー"){
 						Element += '<tr>'
 							+'<td>'+syain.syainId+'</td>'
 							+'<td>'+syain.syainName+'</td>'
@@ -44,9 +44,9 @@ function searchSyainAll(){
 								Element += '<td><input type="button" name="'+syain.syainId+'" value="編集" class="'+syain.syainId+'" onclick="editSyain(this.name);"></td>'
 							}
 							Element += '</tr>'
+					}
 				}
 				$('#syainData').html(Element);
-				$('#search').attr({'value': '再検索','onclick':'reload()'});
 				//$('#search').append(research);
 				Element += '</table>'
 				//console.log(Element);

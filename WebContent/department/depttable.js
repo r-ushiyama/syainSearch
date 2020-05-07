@@ -1,3 +1,6 @@
+var userName;
+var userRoll;
+var userId;
 function getUserData() {
 	// 入力されたユーザーIDとパスワード
 	var requestQuery = {};
@@ -17,7 +20,9 @@ function getUserData() {
 
 			}else{
 				userRoll = json.userRoll
-				executeAjax(json.userRoll);
+				userName = json.userName
+				userId = json.userId
+				executeAjax(json.userRoll,json.userId);
 			}
 		},
 		error:function(XMLHttpRequest, textStatus, errorThrown){
@@ -39,6 +44,9 @@ function executeAjax (userRoll) {
 		dataType : 'json',
 		data :requestQuery,
 		success : function (json) {
+			$('#userInput').html('部署一覧：');
+			$('#userData').append('名前:'+userName+'さん<br>')
+			$('#userData').append('役職:'+userRoll+'<br>')
 			// DOM操作
 			var tableElement = '<table id="deptData">'
 			+'<tr>'
@@ -55,8 +63,6 @@ function executeAjax (userRoll) {
 									+'<td><input type="button" name="'+dept.deptId+'" value="編集" class="'+dept.deptId+'" onclick="editDept(this.name);"></td>'
 									+'<td><input type="button" name="'+dept.deptId+'" value="削除" class="'+dept.deptId+'" onclick="deleteDept(this.name);"></td>'
 									+'</tr>';
-
-
 				}
 				$('#deptData').append(tableElement);
 				tableElement += '</table>';

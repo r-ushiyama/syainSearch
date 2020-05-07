@@ -109,10 +109,10 @@ html{
 #searchWindow{
 	float:left;
 }
-#syainSearchAllButton,#syainSearchAll{
+#syainSearchAllButton,#syainSearchAll,#deptSearchAllButton,#deptSearchAll{
 	height:50px;
 }
-#syainSearchAll{
+#syainSearchAll,#deptSearchAll{
 	width:480px;
 }
 #t{

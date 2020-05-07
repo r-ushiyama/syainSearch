@@ -9,16 +9,27 @@
 	<script type="text/javascript" src="../jquery-1.10.2.js"></script>
 	<script type="text/javascript" src="depttable.js"></script>
 	<script type="text/javascript" src="sidebutton.js"></script>
+	<script type="text/javascript" src="searchalldept.js"></script>
 </head>
 <body>
-	<div id="left-menu">
-		<div id="button">
+	<div id="header">
+		<div id="userData"></div>
+		<div id="searchWindow">
+			<input type="button" value="検索" id="deptSearchAllButton" onclick="searchDeptAll();">
+			<input type="text" id="deptSearchAll" placeholder="部署を検索">
 		</div>
 	</div>
-	<div id="right-menu">
-			<div id="comment"></div>
-			<div id="deptData"></div>
-	</div>
 
+	<div id="t">
+		<div id="left-menu">
+			<div id="button">
+			</div>
+		</div>
+		<div id="right-menu">
+				<div id="comment"></div>
+				<div id="userInput"></div>
+				<div id="deptData"></div>
+		</div>
+	</div>
 </body>
 </html>
