@@ -8,14 +8,30 @@
 <!-- JavaScriptの読み込み -->
 <script type="text/javascript" src="../jquery-1.10.2.js"></script>
 <script type="text/javascript" src="syaintable.js"></script>
+<script type="text/javascript" src="searchallsyain.js"></script>
 </head>
 <body>
-	<div id="comment"></div>
+	<div id="header">
+		<div id="userData"></div>
+		<div id="searchWindow">
+			<input type="button" value="検索" id="syainSearchAllButton" onclick="searchSyainAll();">
+			<input type="text" id="syainSearchAll" placeholder="社員を検索">
+		</div>
+	</div>
+
+	<div id="t">
+			<div id="left-menu">
+		<div id="button"></div>
+	</div>
+	<div id="right-menu">
+			<div id="comment"></div>
 	<div id="userInput"></div>
 	<div id="syainData"></div>
-
-	<div id="button">
+	</div>
 
 	</div>
+
+
+
 </body>
 </html>

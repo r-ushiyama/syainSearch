@@ -64,7 +64,7 @@ function createInputbox() {
 					+'名前に含む文字：<input type="text" id="syainName" placeholder="田中太郎">'
 			$('#userInput').append(Element);
 
-			$('#button').append('<input type="button" value="検索" id="searchSyain" onclick="searchSyain();"><br>')
+			$('#button').append('<input type="button" value="検索" id="search" onclick="searchSyain();"><br>')
 			$('#button').append('<input type="button" value="キャンセル" id="cancel" onclick="cancel();">')
 		}
 	});
@@ -94,7 +94,7 @@ function searchSyain(){
 			$('#userInput').html('');
 			if(json.length==0){
 				$('#userInput').append('登録されている社員がいません');
-				$('#searchSyain').attr({'value': '新規作成','onclick':"location.href = '/syainSearch/syain/syainedit.html'"});
+				$('#search').attr({'value': '新規作成','onclick':"location.href = '/syainSearch/syain/syainedit.html'"});
 				$('#cancel').attr({'value': '再検索','onclick':'reload()'});
 			}else{
 				var Element = '<table id="syainData">'
@@ -113,7 +113,7 @@ function searchSyain(){
 
 				}
 				$('#userInput').append(Element);
-				$('#searchSyain').attr({'value': '再検索','onclick':'reload()'});
+				$('#search').attr({'value': '再検索','onclick':'reload()'});
 				//$('#search').append(research);
 				Element += '</table>'
 				//console.log(Element);

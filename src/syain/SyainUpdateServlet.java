@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -12,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -44,9 +46,11 @@ public class SyainUpdateServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 1 リクエストパラメータの受け取り
-		// 2 DBからのデータの取得
-		// 3 レスポンスを返す
+		HttpSession session = request.getSession(true);
+		String RoleSetting[] = {"マネージャー"};
+		if(!Arrays.asList(RoleSetting).contains(session.getAttribute("userRoll"))){
+			throw new RuntimeException();
+		}
 
 
 		response.setContentType("text/html; charset=UTF-8");

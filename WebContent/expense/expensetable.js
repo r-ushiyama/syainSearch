@@ -41,7 +41,7 @@ function executeAjax (userRoll,userName) {
 			// DOM操作
 			console.dir(json);
 				if(userRoll==="マネージャー"){
-					var tableElement = '<table id="deptData">'
+					var tableElement = '<table class="expData">'
 						+'<tr>'
 						+'<th>申請ID</th>'
 						+'<th>申請日</th>'
@@ -76,7 +76,7 @@ function executeAjax (userRoll,userName) {
 										+'<td><input type="button" name="'+exp.expenseId+'" value="詳細" class="'+exp.expenseId+'" onclick="location.href = \'/syainSearch/expense/expensedetail.html?expenseId='+exp.expenseId+'\';"></td>'
 										+'</tr>';
 					}
-					$('#deptData').append(tableElement);
+					$('#expData').append(tableElement);
 					tableElement += '</table>';
 					$('#button').append('<input type="button" value="新規追加" id="addExp" onclick="location.href = \'/syainSearch/expense/expenseadd.html\';"><br>')
 					$('#button').append('<input type="button" value="社員情報" id="searchSyain" onclick="location.href = \'/syainSearch/syain/syaintable.html\';"><br>')
@@ -127,7 +127,7 @@ function executeAjax (userRoll,userName) {
 					$('#button').append('<input type="button" value="部署情報" id="goDept" onclick="location.href = \'/syainSearch/department/depttable.html\';"><br>')
 					$('#button').append('<input type="button" value="ログアウト" id="logout" onclick="location.href = \'../index.html?request=logout\';">')
 
-					$('#deptData').append(tableElement);
+					$('#expData').append(tableElement);
 					tableElement += '</table>';
 
 				}

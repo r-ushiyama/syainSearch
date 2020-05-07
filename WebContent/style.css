@@ -31,23 +31,90 @@ table td {
 	/* 枠線 */
 	border: 1px solid #999;
 	/* 背景色 */
-	background-color: #fff;
+	/* background-color:rgba(242,245,245,0.8); */
 }
 
 
 input,select,check{
 	margin-top:10px;
-	font-size:20px;
+	font-size:18px;
 }
 
 body{
-	margin:15px 0px 0px 15px;
+	margin:0px;
 }
 
-#addSyain,#searchSyain,#cancel,#confirm,#addDept,#gotop,#goDept,#goSyain{
-	margin-left:0px
+#addSyain,#searchSyain,#addDept,#gotop,#goDept,#goSyain,#addExp,#goExp,#logout{
+	margin-right:20px;
+	width:150px;
+	height:55px;
+}
+#cancel,#confirm,#search,#back{
+	margin-left:0px;
+	width:150px;
 }
 
 html{
-	font-size:20px;
+	font-size:18px;
+	min-width:1600px;
+	height:900px;
+}
+
+.Yes{
+	background-color: green;
+	color:#FFFFFF;
+	width:150px;
+	margin-right:10px;
+	height:55px;
+}
+.No{
+	background-color: red;
+	color:#FFFFFF;
+	width:150px;
+	margin-left:10px;
+	height:55px;
+}
+#deny_reason{
+	width:320px;
+	height:30px;
+}
+#header{
+	height:75px;
+	border-bottom:2px solid #000000;
+}
+#left-menu{
+	clear:left;
+	float:left;
+	padding:15px;
+	height:900px;
+	border-right:2px solid #000000;
+	flex:1;
+
+}
+#right-menu{
+	/* background-color:rgba(242,245,245,0.8); */
+	float:left;
+	padding:20px 0px 0px 20px;
+	height:900px;
+	flex:9;
+}
+#contents{
+	margin:20px 0px 0px 20px;
+}
+#userData{
+	margin:10px;
+	margin-right:40px;
+	float:left;
+}
+#searchWindow{
+	float:left;
+}
+#syainSearchAllButton,#syainSearchAll{
+	height:50px;
+}
+#syainSearchAll{
+	width:480px;
+}
+#t{
+	display: flex;
 }

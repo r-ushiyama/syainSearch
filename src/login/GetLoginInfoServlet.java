@@ -61,24 +61,16 @@ public class GetLoginInfoServlet extends HttpServlet {
 	      pw.append(new ObjectMapper().writeValueAsString(responseData));
 	    }*/
 		Map <String, String> responseData = new HashMap<>();
-		
+
 		response.setContentType("text/html;charset=UTF-8");
 		HttpSession session = request.getSession(true);
 		String status = (String) session.getAttribute("userId");
 		String loginRequest = request.getParameter("loginRequest");
 		System.out.println(loginRequest);
 		PrintWriter pw = response.getWriter();
-		
+
 		if(status == null) {
-			if(loginRequest != null &&  loginRequest.equals("login")) {
-				session.setAttribute("userId",(String) session.getAttribute("userId"));
-				session.setAttribute("userName",(String) session.getAttribute("userName"));
-				session.setAttribute("userRoll",(String) session.getAttribute("userRoll"));
-				//pw.append(new ObjectMapper().writeValueAsString("ログイン完了。"));
-			}else {
-				//pw.append(new ObjectMapper().writeValueAsString("ログインして下さい。"));
-				responseData.put("json", "NEEDLOGIN");
-			}
+			responseData.put("json", "NEEDLOGIN");
 		}else {
 			if (loginRequest != null && loginRequest.equals("logout")){
 				session.removeAttribute("userId");

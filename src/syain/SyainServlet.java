@@ -42,11 +42,11 @@ public class SyainServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 				response.setContentType("text/html; charset=UTF-8");
-
+				System.out.println(request.getParameter("searchData"));
 				Map<String, String> ParamFromHttp = getParameterFromHttp(request);
 
 				List<Syain> syainList = selectSyainFromDB(ParamFromHttp.get("syainId"), ParamFromHttp.get("syainName"),
-						ParamFromHttp.get("syainDeptName"), ParamFromHttp.get("jsRequest"));
+						ParamFromHttp.get("syainDeptName"), ParamFromHttp.get("jsRequest"), ParamFromHttp.get("searchData"));
 
 				// アクセスした人に応答するためのJSONを用意する
 				PrintWriter pw = response.getWriter();
@@ -62,12 +62,13 @@ public class SyainServlet extends HttpServlet {
 		ParamFromHttp.put("syainName" , request.getParameter("syainName"));
 		ParamFromHttp.put("syainDeptName" , request.getParameter("syainDeptName"));
 		ParamFromHttp.put("jsRequest" , request.getParameter("request"));
+		ParamFromHttp.put("searchData" , request.getParameter("searchData"));
 		return ParamFromHttp;
 	}
 
-	private List<Syain> selectSyainFromDB(String syainId, String syainName, String syainDeptName, String jsRequest) {
+	private List<Syain> selectSyainFromDB(String syainId, String syainName, String syainDeptName, String jsRequest, String searchData) {
 		//実行するSQL文を決定
-		String sql  = defineSqlByRequest(syainId, syainName, syainDeptName, jsRequest);
+		String sql  = defineSqlByRequest(syainId, syainName, syainDeptName, jsRequest, searchData);
 
 		//DBのURL,ID,PASSを取得
 		Map<String, String> conInfo = ConnectDb.loadDB();
@@ -121,7 +122,7 @@ public class SyainServlet extends HttpServlet {
 		return syain;
 	}
 
-	private String defineSqlByRequest(String syainId, String syainName, String syainDeptName, String jsRequest) {
+	private String defineSqlByRequest(String syainId, String syainName, String syainDeptName, String jsRequest, String searchData) {
 		String sql = "";
 		if(jsRequest.equals("syaintable")){
 			//一覧表示
@@ -130,12 +131,25 @@ public class SyainServlet extends HttpServlet {
 			sql = createSelectSyainByIdSql(syainId);
 		}else if(jsRequest.equals("searchSyain")){
 			sql = someMethod(syainId, syainName, syainDeptName);
-
-		}else{
-			System.out.println("リクエストが指定されていません");
+		}else if(jsRequest.equals("searchAllSyain")){
+			System.out.println("search");
+			sql= All(searchData);
+			System.out.println(sql);
 		}
 		//System.out.println(sql);
 		return sql;
+	}
+
+	private String All(String searchData) {
+		System.out.println(searchData);
+		return "select TR_DEPT.DEPT_NAME,TR_SYAIN.DEPT_ID,ID,NAME,AGE,SEX,PHOTO_ID,JOIN_DATE,LEAVE_DATE,ZIP,PREFECTURE,ADDRESS  \n" +
+				"from TR_SYAIN,TR_DEPT  \n" +
+				"where TR_SYAIN.DEPT_ID = TR_DEPT.DEPT_ID \n" +
+				"and( \n" +
+				"TR_DEPT.DEPT_NAME LIKE '%"+searchData+"%'  \n" +
+				"or TR_SYAIN.ID LIKE '%"+searchData+"%'  \n" +
+				"or TR_SYAIN.NAME LIKE '%"+searchData+"%'  \n" +
+				") order by ID \n";
 	}
 
 	private String someMethod(String syainId, String syainName, String syainDeptName) {

@@ -20,9 +20,7 @@ function getUserData() {
 				parameter = decodeURIComponent( parameter );
 				deptId = parameter.split('=')[1];
 				if(json.userRoll==="マネージャー"){
-					$('#comment').append('名前：<input type="text" id="inputName">')
-					$('#button').append('<input type="button" value="設定" id="confirm"><br>')
-					$('#button').append('<input type="button" value="キャンセル" id="cancel" onclick="cancel();">')
+
 
 					getparam(deptId);
 				}else{
@@ -53,8 +51,10 @@ function setdeptName () {
 		success : function (json) {
 			var dept = json[0];
 			var deptName = dept.deptName;
-			$('#comment').html('<font size="6">'+deptName+'の名前を変更</font>');
-			document.getElementById('inputName').value = deptName;
+			$('#comment').append('<font size="6">'+deptName+'の名前を変更</font><br>');
+			$('#comment').append('名前：<input type="text" id="inputName" value='+deptName+'>')
+			$('#button').append('<input type="button" value="設定" id="confirm" onclick="confirm();"><br>')
+			$('#button').append('<input type="button" value="キャンセル" id="cancel" onclick="cancel();">')
 		}
 
 	});
@@ -87,9 +87,12 @@ function changeDept(deptId,inputValue,request){
 //パラメータが入力されているか確認
 function getparam(deptId){
 	if(!deptId){
-		$('#comment').html('<font size="6">部署データを新規作成</font>')
+		$('#comment').html('<font size="6">部署データを新規作成</font><br>')
+		$('#comment').append('名前：<input type="text" id="inputName">')
+		$('#button').append('<input type="button" value="設定" id="confirm" onclick="confirm();"><br>')
+		$('#button').append('<input type="button" value="キャンセル" id="cancel" onclick="cancel();">')
 	}else{
-		setdeptName();
+		setdeptName(deptId);
 	}
 }
 

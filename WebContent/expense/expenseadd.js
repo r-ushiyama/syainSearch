@@ -68,7 +68,7 @@ function inputExp(){
 		+'理由:<input type="text" id="Reason" placeholder="会議室に文具を配備するため"></br>'
 		$('#expData').append(Element);
 		$('#button').append('<input type="button" value="設定" id="confirm" onclick="confirm();"><br>')
-		$('#button').append('<input type="button" value="キャンセル" onclick="location.href = \'/syainSearch/expense/expensetable.html\';">')
+		$('#button').append('<input type="button" value="キャンセル" id="cancel" onclick="location.href = \'/syainSearch/expense/expensetable.html\';">')
 
 
 }

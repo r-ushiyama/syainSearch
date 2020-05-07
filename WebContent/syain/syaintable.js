@@ -1,3 +1,6 @@
+var userName;
+var userRoll;
+var userId;
 function getUserData() {
 	// 入力されたユーザーIDとパスワード
 	var requestQuery = {};
@@ -17,6 +20,8 @@ function getUserData() {
 
 			}else{
 				userRoll = json.userRoll
+				userName = json.userName
+				userId = json.userId
 				executeAjax(json.userRoll,json.userId);
 			}
 		},
@@ -61,6 +66,9 @@ function executeAjax (userRoll,userId) {
 										+'</tr>'
 					}
 					Element += '</table>';
+					$('#userData').append('名前:'+userName+'さん<br>')
+					$('#userData').append('役職:'+userRoll+'<br>')
+
 					$('#button').append('<input type="button" value="新規追加" id="addSyain" onclick="editSyain(this.id);"><br>')
 					$('#button').append('<input type="button" value="社員検索" id="searchSyain" onclick="location.href = \'/syainSearch/syain/syainsearch.html\';"><br>')
 					$('#button').append('<input type="button" value="部署情報" id="goDept" onclick="location.href = \'/syainSearch/department/depttable.html\';"><br>')
@@ -85,6 +93,8 @@ function executeAjax (userRoll,userId) {
 						Element += '</tr>'
 					}
 					Element += '</table>';
+					$('#userData').append('名前:'+userName+'さん<br>')
+					$('#userData').append('役職:'+userRoll+'<br>')
 					$('#button').append('<input type="button" value="社員検索" id="searchSyain" onclick="location.href = \'/syainSearch/syain/syainsearch.html\';"><br>')
 					$('#button').append('<input type="button" value="部署情報" id="goDept" onclick="location.href = \'/syainSearch/department/depttable.html\';"><br>')
 					$('#button').append('<input type="button" value="経費情報" id="goExp" onclick="location.href = \'/syainSearch/expense/expensetable.html\';"><br>')

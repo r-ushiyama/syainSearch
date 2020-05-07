@@ -4,8 +4,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,7 +50,8 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    // Servlet 初期化パラメータ情報
 	    String userId = request.getParameter("userId");
-	    String password = request.getParameter("password");
+	    String password = Hmac.getHmac(request.getParameter("password"));
+	    System.out.println(password);
 	    PrintWriter pw = response.getWriter();
 	   // String Id = "admin";
 	    //String Pass = "admin";
@@ -57,25 +59,27 @@ public class LoginServlet extends HttpServlet {
 	    //PrintWriter pw = response.getWriter();
 	    response.setContentType("text/html; charset=shift-jis");
 
-	    String sql="select TR_SYAIN.ID ,TR_SYAIN.NAME, TR_AUTH.ROLL \n" +
-	    		"from TR_AUTH \n" +
-	    		",TR_SYAIN \n" +
-	    		"where 1=1 \n" +
-	    		"and TR_AUTH.ID=TR_SYAIN.ID \n" +
-	    		"and TR_AUTH.ID='"+userId+"' \n" +
-	    		"and TR_AUTH.PASS='"+password+"' \n";
+//	    String sql="select TR_SYAIN.ID ,TR_SYAIN.NAME, TR_AUTH.ROLL \n" +
+//	    		"from TR_AUTH \n" +
+//	    		",TR_SYAIN \n" +
+//	    		"where 1=1 \n" +
+//	    		"and TR_AUTH.ID=TR_SYAIN.ID \n" +
+//	    		"and TR_AUTH.ID='"+userId+"' \n" +
+//	    		"and TR_AUTH.PASS='"+password+"' \n";
 
 	    Map<String, String> conInfo = ConnectDb.loadDB();
-	    
+
 	    Map <String, String> responseData = new HashMap<>();
 		// DBへ接続してSQLを実行
 		try (
 				// データベースへ接続します
 				Connection con = DriverManager.getConnection(conInfo.get("url"), conInfo.get("user"), conInfo.get("pass"));
 				// SQLの命令文を実行するための準備をおこないます
-				Statement stmt = con.createStatement();
+				//Statement stmt = con.createStatement();
+				PreparedStatement stmt = createPreparedStatement(con, userId, password);
 				// SQLの命令文を実行し、その結果をResultSet型のrsに代入します
-				ResultSet rs1 = stmt.executeQuery(sql);
+				//ResultSet rs1 = stmt.executeQuery(sql);
+				ResultSet rs1 = stmt.executeQuery();
 			) {
 				//ユーザIDとパスワードが一致しているとき
 				if (rs1.next()) {
@@ -101,5 +105,21 @@ public class LoginServlet extends HttpServlet {
 			}
 
 	  }
+
+	private PreparedStatement createPreparedStatement(Connection con, String userId, String password) throws
+		SQLException {
+		// 実行するSQL文
+	    String sql="select TR_SYAIN.ID ,TR_SYAIN.NAME, TR_AUTH.ROLL \n" +
+	    		"from TR_AUTH \n" +
+	    		",TR_SYAIN \n" +
+	    		"where 1=1 \n" +
+	    		"and TR_AUTH.ID=TR_SYAIN.ID \n" +
+	    		"and TR_AUTH.ID=? \n" +
+	    		"and TR_AUTH.PASS=? \n";
+		PreparedStatement stmt = con.prepareStatement(sql);
+		stmt.setString(1, userId);
+		stmt.setString(2, password);
+		return stmt;
+	}
 	}
 

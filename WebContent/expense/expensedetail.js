@@ -147,9 +147,10 @@ function executeAjax (userRoll,userName) {
 					}
 					tableElement += '</table>';
 					$('#expData').append(tableElement);
-					$('#expData').append('<input type="button" name="'+exp.expenseId+'" value="承認" class="'+exp.expenseId+'" onclick="confirm(this.name)">')
-					$('#expData').append('<input type="button" name="'+exp.expenseId+'" value="却下" class="'+exp.expenseId+'" onclick="deny(this.name)"><br>')
-					$('#expData').append('<input type="text" value="" placeholder="却下理由を入力" id="deny_reason"><br>')
+					$('#expData').append('<input type="text" value="" placeholder="却下理由を入力" id="deny_reason" minlength="1" maxlength="16"><br>')
+					$('#expData').append('<input type="button" name="'+exp.expenseId+'" value="承認" class="'+exp.expenseId+' Yes" onclick="confirm(this.name)">')
+					$('#expData').append('<input type="button" name="'+exp.expenseId+'" value="却下" class="'+exp.expenseId+' No" onclick="deny(this.name)"><br>')
+
 					$('#button').append('<input type="button" value="戻る" id="back" onclick="location.href = \'/syainSearch/expense/expensetable.html\';"><br>')
 				}else if(userRoll==="メンバー"){
 					var tableElement = '<table id="expData">'
