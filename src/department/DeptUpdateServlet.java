@@ -55,10 +55,10 @@ public class DeptUpdateServlet extends HttpServlet {
 		String deptId = request.getParameter("deptId");
 		String jsRequest = request.getParameter("request");
 		String newName = request.getParameter("newName");
+		String newId = request.getParameter("newId");
 		//String jsRequest = "depttable";
 		String sql = "";
 		String excute_message = "";
-
 		if(jsRequest.equals("updateDept")){
 			//部署名を編集（アップデート）
 			sql = "update TR_DEPT \n" +
@@ -67,20 +67,16 @@ public class DeptUpdateServlet extends HttpServlet {
 			excute_message = "部署名を"+newName+"に変更しました";
 		}else if(jsRequest.equals("createDept")){
 			sql = "insert into TR_DEPT \n" +
-					"(DEPT_ID,DEPT_NAME) \n" +
-					"select \n" +
-					"CONCAT('D', LPAD(count(*)+1,2,'0')),'"+newName+"' \n" +
-					"from \n" +
-					"TR_DEPT \n" +
-					"order by \n" +
-					"DEPT_ID\n";
+					"(DEPT_ID, DEPT_NAME) \n" +
+					"values('"+newId+"', '"+newName+"') \n";
+
 			excute_message = newName+"を追加しました";
 		}else if(jsRequest.equals("deleteDept")){
 			sql = "delete from TR_DEPT \n" +
 					"where DEPT_ID = '"+deptId+"' \n";
 			excute_message = newName+"を削除しました";
 		}else{
-			System.out.println("リクエストが指定されていません");
+			throw new RuntimeException();
 		}
 
 		//DBのURL,ID,PASSを取得

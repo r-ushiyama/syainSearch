@@ -9,30 +9,24 @@
 <script type="text/javascript" src="login.js"></script>
 </head>
 <body>
-	<!--  header -->
-	<div class="header">
-		<h1>社員情報管理ツールログイン</h1>
-	</div>
-	<!--  メインコンテンツ -->
-	<div class="contents">
-		<table>
-			<tr>
-				<th>ユーザーID:</th>
-				<th><input type="text"  placeholder="ユーザーID" id="js-login-id" class="login-id"></th>
-			</tr>
-			<tr>
-				<th>パスワード:</th>
-				<th><input type="password"  placeholder="パスワード" id="js-login-pass" class="login-pass"></th>
-			</tr>
-		</table>
-		<button id="js-login-button" class="login-button">ログイン</button>
-
-		<p>-----------完成後削除------------</p>
-		<br>
-		<input type="button" id="mng-button" value="マネージャーログイン" onclick="loginTest('EMP0001','0001pass')">
-		<br>
-		<input type="button" id="mem-button" value="メンバーログイン" onclick="loginTest('EMP0002','0002pass')">
-		<p>-----------完成後削除------------</p>
+	<div id="wrapper">
+		<div class="header">
+			<h1>社員情報管理ツールログイン</h1>
+		</div>
+		<!--  メインコンテンツ -->
+		<div class="contents">
+			<table>
+				<tr>
+					<th>ユーザーID:</th>
+					<th><input type="text"  placeholder="ユーザーID" id="js-login-id" class="login-id"></th>
+				</tr>
+				<tr>
+					<th>パスワード:</th>
+					<th><input type="password"  placeholder="パスワード" id="js-login-pass" class="login-pass"></th>
+				</tr>
+			</table>
+			<button id="js-login-button" class="login-button">ログイン</button>
+		</div>
 	</div>
 </body>
 </html>

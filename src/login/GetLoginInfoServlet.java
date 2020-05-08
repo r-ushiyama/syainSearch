@@ -40,33 +40,12 @@ public class GetLoginInfoServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/*response.setContentType("text/html; charset=shift-jis");
-		HttpSession session = request.getSession(false);
-		PrintWriter pw = response.getWriter();
-		Map <String, String> responseData = new HashMap<>();
-
-		System.out.println("connected");
-
-	    //セッションオブジェクトの獲得確認
-	    if (session == null || session.getAttribute("username") == null || session.getAttribute("username") == "undefined") {
-	     //セッションが取得できなければエラー
-	    	responseData.put("json", "NG");
-		    pw.append(new ObjectMapper().writeValueAsString(responseData));
-	    } else {
-	     //セッションが取得できた場合はリストを表示
-	     System.out.println(session.getAttribute("username") + "さん");
-	     responseData.put("userName", (String) session.getAttribute("username"));
-
-	   	// JSONで出力する
-	      pw.append(new ObjectMapper().writeValueAsString(responseData));
-	    }*/
 		Map <String, String> responseData = new HashMap<>();
 
 		response.setContentType("text/html;charset=UTF-8");
 		HttpSession session = request.getSession(true);
 		String status = (String) session.getAttribute("userId");
 		String loginRequest = request.getParameter("loginRequest");
-		System.out.println(loginRequest);
 		PrintWriter pw = response.getWriter();
 
 		if(status == null) {
@@ -76,11 +55,8 @@ public class GetLoginInfoServlet extends HttpServlet {
 				session.removeAttribute("userId");
 				session.removeAttribute("userName");
 				session.removeAttribute("userRoll");
-				System.out.println(session.getAttribute("userId"));
-				//pw.append(new ObjectMapper().writeValueAsString("ログアウト完了。"));
 				responseData.put("json", "LOGOUT");
 			}else {
-				//pw.append(new ObjectMapper().writeValueAsString("ログイン済み"));
 				responseData.put("userId", (String) session.getAttribute("userId"));
 				responseData.put("userName", (String) session.getAttribute("userName"));
 				responseData.put("userRoll", (String) session.getAttribute("userRoll"));

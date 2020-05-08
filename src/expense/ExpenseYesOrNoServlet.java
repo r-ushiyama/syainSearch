@@ -64,8 +64,6 @@ public class ExpenseYesOrNoServlet extends HttpServlet {
 		String sql = "";
 		String excute_message = "";
 		String time = toStr(LocalDateTime.now(), "yyyy-MM-dd");
-		System.out.println(expId+userName+jsReq);
-
 
 		if(jsReq.equals("confirm")){
 			//部署名を編集（アップデート）
@@ -82,8 +80,6 @@ public class ExpenseYesOrNoServlet extends HttpServlet {
 					"DENY_REASON = '"+denyReason+"' \n" +
 					"where EXPENSE_ID = '"+expId+"' \n";
 		}
-
-		System.out.println(sql);
 
 		//DBのURL,ID,PASSを取得
 		Map<String, String> conInfo = ConnectDb.loadDB();

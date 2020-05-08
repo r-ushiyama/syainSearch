@@ -42,7 +42,6 @@ public class SyainServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 				response.setContentType("text/html; charset=UTF-8");
-				System.out.println(request.getParameter("searchData"));
 				Map<String, String> ParamFromHttp = getParameterFromHttp(request);
 
 				List<Syain> syainList = selectSyainFromDB(ParamFromHttp.get("syainId"), ParamFromHttp.get("syainName"),
@@ -132,16 +131,12 @@ public class SyainServlet extends HttpServlet {
 		}else if(jsRequest.equals("searchSyain")){
 			sql = someMethod(syainId, syainName, syainDeptName);
 		}else if(jsRequest.equals("searchAllSyain")){
-			System.out.println("search");
 			sql= All(searchData);
-			System.out.println(sql);
 		}
-		//System.out.println(sql);
 		return sql;
 	}
 
 	private String All(String searchData) {
-		System.out.println(searchData);
 		return "select TR_DEPT.DEPT_NAME,TR_SYAIN.DEPT_ID,ID,NAME,AGE,SEX,PHOTO_ID,JOIN_DATE,LEAVE_DATE,ZIP,PREFECTURE,ADDRESS  \n" +
 				"from TR_SYAIN,TR_DEPT  \n" +
 				"where TR_SYAIN.DEPT_ID = TR_DEPT.DEPT_ID \n" +

@@ -9,11 +9,9 @@ function getUserData() {
 		data : requestQuery,
 		success : function(json) {
 			// サーバーとの通信に成功した時の処理
-			console.dir(json)
 			if(!json.userId){
-				$('#comment').html('ログインが必要です。');
-				var Element = '<input type="button" value="ログイン画面へ" id="goSyain" onclick="location.href = \'/syainSearch/login.html\';">'
-				$('#button').append(Element);
+				alert("権限がありません");
+				location.href = '/syainSearch/login.html';
 
 			}else{
 				var parameter  = location.search.substring( 1, location.search.length );
@@ -83,7 +81,7 @@ function Sex(syainSex,Element){
 
 }
 
-//社員情報内に部署をセット
+//社員情報内に社員をセット
 function Dept(syainDeptName,deptName,Element){
 	Element += '所属:<select name="Dept" id="Dept">';
 	for(var i=0;i<deptName.length;i++){
@@ -145,7 +143,7 @@ function setsyainInfo(deptName) {
 	});
 }
 
-//部署一覧取得
+//社員一覧取得
 function getDepttable(req) {
 	'use strict';
 	var requestQuery = {
@@ -194,7 +192,7 @@ function inputSyainInfo(deptName){
 
 //URLパラメータを取得
 function getparam(syainId){
-	//URLから部署IDを取得する。nullの場合は部署の新規作成
+	//URLから社員IDを取得する。nullの場合は社員の新規作成
 	if(!syainId){
 		$('#comment').html('<font size="16">社員データを新規作成</font>')
 		var req="add"

@@ -14,3 +14,7 @@ body{
 .login-button{
 	width:150px;
 }
+
+#wrapper{
+	height:200px;
+}

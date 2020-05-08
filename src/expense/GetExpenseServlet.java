@@ -40,14 +40,13 @@ public class GetExpenseServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html; charset=UTF-8");
-		//一覧表示、追加、編集、削除のどのリクエストかを判断
 		String jsReq = request.getParameter("expId");
 		//String jsRequest = "depttable";
 		String sql = "";
 		if(jsReq.equals("all")){
 			sql = "select EXPENSE_ID, REQ_DATE, APP_NAME, TITLE, PAYEE, AMOUNT,  \n" +
 					"	UPDATE_DATE, UPDATE_NAME, STATUS, REASON, DENY_REASON \n" +
-					"from TR_EXPENSE order by UPDATE_DATE desc\n";
+					"from TR_EXPENSE order by STATUS\n";
 		}else{
 			sql = "select EXPENSE_ID, REQ_DATE, APP_NAME, TITLE, PAYEE, AMOUNT,  \n" +
 					"	UPDATE_DATE, UPDATE_NAME, STATUS, REASON, DENY_REASON \n" +
@@ -58,7 +57,6 @@ public class GetExpenseServlet extends HttpServlet {
 		//DBのURL,ID,PASSを取得
 		Map<String, String> conInfo = ConnectDb.loadDB();
 
-		System.out.println(sql);
 		try (
 			// データベースへ接続します
 			Connection con = DriverManager.getConnection(conInfo.get("url"), conInfo.get("user"), conInfo.get("pass"));

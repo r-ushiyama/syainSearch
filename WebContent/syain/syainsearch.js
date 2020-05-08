@@ -9,11 +9,9 @@ function getUserData() {
 		data : requestQuery,
 		success : function(json) {
 			// サーバーとの通信に成功した時の処理
-			console.dir(json)
 			if(!json.userId){
-				$('#comment').html('ログインが必要です。');
-				var Element = '<input type="button" value="ログイン画面へ" id="goSyain" onclick="location.href = \'/syainSearch/login.html\';">'
-				$('#button').append(Element);
+				alert("権限がありません");
+				location.href = '/syainSearch/login.html';
 
 			}else{
 				createInputbox();
@@ -27,7 +25,7 @@ function getUserData() {
 	});
 }
 
-//部署をプルダウンメニューとして表示
+//社員をプルダウンメニューとして表示
 function Dept(deptName,Element){
 	Element += '所属:<select name="Dept" id="Dept">'
 		+'<option value="none">未指定</option>';

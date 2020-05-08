@@ -51,21 +51,9 @@ public class LoginServlet extends HttpServlet {
 	    // Servlet 初期化パラメータ情報
 	    String userId = request.getParameter("userId");
 	    String password = Hmac.getHmac(request.getParameter("password"));
-	    System.out.println(password);
 	    PrintWriter pw = response.getWriter();
-	   // String Id = "admin";
-	    //String Pass = "admin";
-	    System.out.println(userId+password);
-	    //PrintWriter pw = response.getWriter();
-	    response.setContentType("text/html; charset=shift-jis");
 
-//	    String sql="select TR_SYAIN.ID ,TR_SYAIN.NAME, TR_AUTH.ROLL \n" +
-//	    		"from TR_AUTH \n" +
-//	    		",TR_SYAIN \n" +
-//	    		"where 1=1 \n" +
-//	    		"and TR_AUTH.ID=TR_SYAIN.ID \n" +
-//	    		"and TR_AUTH.ID='"+userId+"' \n" +
-//	    		"and TR_AUTH.PASS='"+password+"' \n";
+	    response.setContentType("text/html; charset=shift-jis");
 
 	    Map<String, String> conInfo = ConnectDb.loadDB();
 
@@ -74,11 +62,7 @@ public class LoginServlet extends HttpServlet {
 		try (
 				// データベースへ接続します
 				Connection con = DriverManager.getConnection(conInfo.get("url"), conInfo.get("user"), conInfo.get("pass"));
-				// SQLの命令文を実行するための準備をおこないます
-				//Statement stmt = con.createStatement();
 				PreparedStatement stmt = createPreparedStatement(con, userId, password);
-				// SQLの命令文を実行し、その結果をResultSet型のrsに代入します
-				//ResultSet rs1 = stmt.executeQuery(sql);
 				ResultSet rs1 = stmt.executeQuery();
 			) {
 				//ユーザIDとパスワードが一致しているとき
@@ -90,11 +74,8 @@ public class LoginServlet extends HttpServlet {
 				    session.setAttribute("userId", userId);
 				    session.setAttribute("userName", userName);
 				    session.setAttribute("userRoll", userRoll);
-
-				    System.out.println("ログインしました");
 				    responseData.put("result", "OK");
 				}else{
-					System.out.println("NG パスワードまたはユーザー名が違います");
 					responseData.put("result", "NG");
 				}
 				// JSONで出力する

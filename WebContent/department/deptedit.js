@@ -11,21 +11,17 @@ function getUserData() {
 			// サーバーとの通信に成功した時の処理
 			console.dir(json)
 			if(!json.userId){
-				$('#comment').html('ログインが必要です。');
-				var Element = '<input type="button" value="ログイン画面へ" id="goSyain" onclick="location.href = \'/syainSearch/login.html\';">'
-				$('#button').append(Element);
-
+				alert("権限がありません");
+				location.href = '/syainSearch/login.html';
 			}else{
 				var parameter  = location.search.substring( 1, location.search.length );
 				parameter = decodeURIComponent( parameter );
 				deptId = parameter.split('=')[1];
 				if(json.userRoll==="マネージャー"){
-
-
 					getparam(deptId);
 				}else{
 					alert("権限がありません");
-					location.href = '/syainSearch/syain/syaintable.html';
+					location.href = '/syainSearch/department/depttable.html';
 				}
 			}
 		},
@@ -61,11 +57,12 @@ function setdeptName () {
 }
 
 //部署の更新と追加
-function changeDept(deptId,inputValue,request){
+function changeDept(deptId,inputValue,inputdeptValue,request){
 	var requestQuery = {
 			"request" : request,
 			"deptId" : deptId,
-			"newName" : inputValue
+			"newName" : inputValue,
+			"newId":inputdeptValue
 	};
 	'use strict';
 	$.ajax({
@@ -88,6 +85,7 @@ function changeDept(deptId,inputValue,request){
 function getparam(deptId){
 	if(!deptId){
 		$('#comment').html('<font size="6">部署データを新規作成</font><br>')
+		$('#comment').append('部署ID：<input type="text" id="deptId"><br>')
 		$('#comment').append('名前：<input type="text" id="inputName">')
 		$('#button').append('<input type="button" value="設定" id="confirm" onclick="confirm();"><br>')
 		$('#button').append('<input type="button" value="キャンセル" id="cancel" onclick="cancel();">')
@@ -100,17 +98,17 @@ function getparam(deptId){
 function confirm(){
 
 	var inputValue = $('#inputName').val();
-
+	var inputdeptValue = $('#deptId').val();
 	if(!inputValue){
 		alert("何も入力されていません");
 	}else{
 
 		if(!deptId){
 			var request = "createDept"
-			changeDept(deptId,inputValue,request);
+			changeDept(deptId,inputValue,inputdeptValue,request);
 		}else{
 			var request = "updateDept"
-			changeDept(deptId,inputValue,request);
+			changeDept(deptId,inputValue,inputdeptValue,request);
 		}
 	}
 

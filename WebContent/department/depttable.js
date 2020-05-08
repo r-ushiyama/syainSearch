@@ -11,13 +11,9 @@ function getUserData() {
 		url : '/syainSearch/GetLoginInfoServlet',
 		data : requestQuery,
 		success : function(json) {
-			// サーバーとの通信に成功した時の処理
-			console.dir(json)
 			if(!json.userId){
-				$('#comment').html('ログインが必要です。');
-				var Element = '<input type="button" value="ログイン画面へ" id="goSyain" onclick="location.href = \'/syainSearch/login.html\';">'
-				$('#button').append(Element);
-
+				alert("権限がありません");
+				location.href = '/syainSearch/login.html';
 			}else{
 				userRoll = json.userRoll
 				userName = json.userName

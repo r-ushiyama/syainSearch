@@ -69,8 +69,6 @@ public class ExpenseAddServlet extends HttpServlet {
 					"from \n" +
 					"TR_EXPENSE \n";
 
-		System.out.println(sql);
-
 		//DBのURL,ID,PASSを取得
 		Map<String, String> conInfo = ConnectDb.loadDB();
 
